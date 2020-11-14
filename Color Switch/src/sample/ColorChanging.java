@@ -1,2 +1,6 @@
-package sample;public interface ColorChanging {
+package sample;
+
+public interface ColorChanging {
+    public String getColor();
+    public void changeColor();
 }
