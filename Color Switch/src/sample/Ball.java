@@ -5,7 +5,7 @@ public class Ball implements ColorChanging{
     private final int radius;
 
     public Ball(){
-
+        this.radius=2;
     }
 
     public void setColor(String s){
