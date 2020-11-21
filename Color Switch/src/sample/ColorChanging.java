@@ -1,6 +1,9 @@
 package sample;
 
+import javafx.scene.paint.Paint;
+
+
 public interface ColorChanging {
-    public String getColor();
+    public Paint getColor();
     public void changeColor();
 }

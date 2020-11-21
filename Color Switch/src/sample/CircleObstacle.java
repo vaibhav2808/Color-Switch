@@ -28,9 +28,6 @@ public class CircleObstacle extends Obstacle{
             arcs[i].setType(ArcType.OPEN);
             arcs[i].setFill(null);
             group.getChildren().add(arcs[i]);
-            arcs[i].setOnMouseClicked(e->{
-                System.out.println("clickes");
-            });
 //            shape.setOnMouseClicked(e->{
 //                System.out.println("clicked");
 //            });

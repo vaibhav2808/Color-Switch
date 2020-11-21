@@ -1,8 +1,11 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 
 public class PlusObstacle extends Obstacle{
     private double length;
@@ -21,7 +24,18 @@ public class PlusObstacle extends Obstacle{
         Line l4=new Line(length/2,length/2,length/2,length);
         l4.setStroke(color[3]);
         l4.setStrokeWidth(10);
-        group.getChildren().addAll(l1,l2,l3,l4);
+        l1.setStrokeLineCap(StrokeLineCap.ROUND);
+        l2.setStrokeLineCap(StrokeLineCap.ROUND);
+        l3.setStrokeLineCap(StrokeLineCap.ROUND);
+        l4.setStrokeLineCap(StrokeLineCap.ROUND);
+
+
+        Circle circle=new Circle();
+        circle.setCenterX(length/2);
+        circle.setCenterY(length/2);
+        circle.setFill(Color.BLACK);
+        circle.setRadius(8);
+        group.getChildren().addAll(l1,l2,l3,l4,circle);
     }
 
     public void setLength(double l){

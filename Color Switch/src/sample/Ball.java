@@ -2,10 +2,11 @@ package sample;
 
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 public class Ball extends Circle implements ColorChanging {
-    private String color;
+    private Paint color;
     private final int radius;
 
     public Ball(){
@@ -17,13 +18,14 @@ public class Ball extends Circle implements ColorChanging {
         this.setCenterY(590);
     }
 
-    public void setColor(String s){
+    public void setColor(Paint s){
         this.color = s;
+        this.setFill(color);
     }
 
     @Override
-    public String getColor(){
-        return "Red";
+    public Paint getColor(){
+        return color;
     }
 
     @Override 
