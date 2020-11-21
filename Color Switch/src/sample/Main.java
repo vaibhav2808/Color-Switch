@@ -15,6 +15,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 //import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -40,6 +41,10 @@ public class Main extends Application {
 //        gc.strokeArc(200,200,90,90,180,90, ArcType.OPEN);
         Paint arr[]={Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW};
         root.getChildren().add(new CircleObstacle(arr,100).getGroup());
+        root.getChildren().add(new PlusObstacle(100,arr).getGroup());
+        root.getChildren().add(new TriangleObstacle(100,arr).getGroup());
+        root.getChildren().add(new DiamondObstacle(100,120,arr).getGroup());
+        root.getChildren().add(new RectangleObstacle(100,100,arr).getGroup());
         root.getChildren().add(new Ball());
         primaryStage.setScene(thescene);
         primaryStage.show();
