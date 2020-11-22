@@ -1,10 +1,12 @@
 package sample;
 
+import javafx.scene.Group;
+
 public class Obstacle {
     private int speed;
-
+    private Group group;
     public Obstacle(){
-        
+        group=new Group();
     }
 
     public String getColor(){
@@ -14,4 +16,8 @@ public class Obstacle {
     public void display(){
 
     }
+    public Group getGroup(){
+        return group;
+    }
+
 }

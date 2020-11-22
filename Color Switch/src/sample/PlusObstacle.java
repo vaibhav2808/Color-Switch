@@ -9,8 +9,8 @@ import javafx.scene.shape.StrokeLineCap;
 
 public class PlusObstacle extends Obstacle{
     private double length;
-    private Group group=new Group();
     public PlusObstacle(double length, Paint[] color){
+        Group group=getGroup();
         this.length=length;
         Line l1=new Line(0,length/2,length/2,length/2);
         l1.setStroke(color[0]);
@@ -43,8 +43,5 @@ public class PlusObstacle extends Obstacle{
     }
     public double getLength(){
         return length;
-    }
-    public Group getGroup(){
-        return group;
     }
 }

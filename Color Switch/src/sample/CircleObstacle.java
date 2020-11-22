@@ -9,10 +9,8 @@ import javafx.scene.shape.Shape;
 
 public class CircleObstacle extends Obstacle{
     private double radius;
-    private Group group;
     public CircleObstacle(Paint color[],double radius){
         this.radius=radius;
-        group=new Group();
         Arc arcs[]=new Arc[4];
         Arc innerArc,outerArc;
         for(int i=0;i<4;i++){
@@ -27,7 +25,7 @@ public class CircleObstacle extends Obstacle{
             arcs[i].setStrokeWidth(10);
             arcs[i].setType(ArcType.OPEN);
             arcs[i].setFill(null);
-            group.getChildren().add(arcs[i]);
+            getGroup().getChildren().add(arcs[i]);
 //            shape.setOnMouseClicked(e->{
 //                System.out.println("clicked");
 //            });
@@ -49,8 +47,5 @@ public class CircleObstacle extends Obstacle{
     }
     public double getRadius(){
         return radius;
-    }
-    public Group getGroup(){
-        return group;
     }
 }

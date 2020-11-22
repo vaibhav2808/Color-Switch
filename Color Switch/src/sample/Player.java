@@ -5,8 +5,8 @@ public class Player {
     private int score;
     private Ball ball;
 
-    public Player(){
-
+    public Player(Ball ball){
+        this.ball=ball;
     }
 
     public void setScore(int s){

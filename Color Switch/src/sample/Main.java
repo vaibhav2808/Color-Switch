@@ -66,7 +66,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Color Switch");
-        GameplayScene(primaryStage);
+        GameManager manager=new GameManager();
+        manager.startNewGame(primaryStage);
+        primaryStage.show();
+
+//        GameplayScene(primaryStage);
 
     }
 
@@ -108,7 +112,7 @@ public class Main extends Application {
 //        root.getChildren().add(new RectangleObstacle(100,100,arr).getGroup());
 //        root.getChildren().add(new Ball());
 
-
+        arrayList.add(new ColorChangerObstacle().getGroup());
         arrayList.add(new CircleObstacle(arr,100).getGroup());
         arrayList.add(new PlusObstacle(200,arr).getGroup());
         arrayList.add(new TriangleObstacle(200,arr).getGroup());
@@ -142,7 +146,6 @@ public class Main extends Application {
                 ball.setTranslateY(ball.getTranslateY()+1);
 
                 if(ball.getTranslateY()<-50) {
-                    System.out.println("hello");
                     for (int i = 0; i < arrayList.size(); i++) {
                         arrayList.get(i).setTranslateY(arrayList.get(i).getTranslateY() + 5);
                     }

@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.stage.Stage;
+
 public class GameManager {
     private Game game;
     private int highScore;
@@ -21,8 +23,9 @@ public class GameManager {
         return highScore;
     }
 
-    public void startNewGame(){
-
+    public void startNewGame(Stage theStage){
+        game=new Game();
+        playGame(theStage);
     }
 
     public void savedGamesList(){
@@ -41,7 +44,7 @@ public class GameManager {
 
     }
 
-    public void playGame(){
-
+    public void playGame(Stage theStage){
+        game.play(theStage);
     }
 }

@@ -8,9 +8,8 @@ import javafx.scene.shape.Shape;
 public class RectangleObstacle extends Obstacle{
     private double length;
     private double breadth;
-    private Group group;
     public RectangleObstacle(double l, double b, Paint arr[]){
-        group=new Group();
+        Group group=getGroup();
         this.length=l;
         this.breadth=b;
         Rectangle r,r2;
@@ -58,7 +57,5 @@ public class RectangleObstacle extends Obstacle{
     public double getBreadth(){
         return breadth;
     }
-    public Group getGroup(){
-        return group;
-    }
+
 }

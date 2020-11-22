@@ -11,11 +11,12 @@ public class Ball extends Circle implements ColorChanging {
 
     public Ball(){
         super();
-        this.radius=2;
-        this.setRadius(10);
+        this.radius=10;
+        this.setRadius(radius);
         this.setFill(Color.WHITE);
         this.setCenterX(180);
         this.setCenterY(590);
+        this.setTranslateY(250);
     }
 
     public void setColor(Paint s){

@@ -8,9 +8,8 @@ import javafx.scene.shape.StrokeLineCap;
 public class DiamondObstacle extends Obstacle{
     private double angle;
     private double side;
-    private Group group=new Group();
     public DiamondObstacle(double s, double a, Paint color[]){
-
+        Group group=getGroup();
         this.side=s;
         this.angle=a;
         Line l1=new Line(0,0,side,0);
@@ -43,8 +42,5 @@ public class DiamondObstacle extends Obstacle{
     }
     public double getSide(){
         return side;
-    }
-    public Group getGroup(){
-        return group;
     }
 }
