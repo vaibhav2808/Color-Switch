@@ -36,7 +36,7 @@ public class Game extends AnimationTimer {
     private Scene gameScene,pauseScene;
     private StackPane gamePlayRoot;
     private int obstacleOnscreen=0;
-    public Game(){
+    public Game(Stage primaryStage) throws FileNotFoundException {
         ball=new Ball();
         player=new Player(ball);
         obstacles=new ArrayList<>(100);
@@ -44,8 +44,15 @@ public class Game extends AnimationTimer {
         gamePlayRoot.setStyle("-fx-background-color: BLACK");
         gameScene=new Scene(gamePlayRoot,360,640,Color.BLACK);
         createObstacles();
+        createPauseScene(primaryStage);
         obstacleRenderedPosition=50;
-
+        //add pause button
+//        Image pause = new Image( new FileInputStream("src/assets/Pause.jpg") );
+//        ImageView imageViewPause = new ImageView(pause);
+//        imageViewPause.setPreserveRatio(true);
+//        imageViewPause.setFitHeight(20);
+//        Button pauseBtn = new Button("", imageViewPause);
+//        gamePlayRoot.getChildren().add(pauseBtn);
 
         for (int i = 0; i < maxNumofObstaclesrendered ; i++) {
             colorSwitcher[i]=new ColorChangerObstacle();
@@ -61,11 +68,16 @@ public class Game extends AnimationTimer {
             transition.play();
         }
         gamePlayRoot.getChildren().add(ball);
-        gameScene .setOnKeyPressed(e->{
+        gameScene.setOnKeyPressed(e->{
+            System.out.println("heloo");
             if(e.getCode()== KeyCode.SPACE){
                 ball.setTranslateY(ball.getTranslateY()- 50);
             }
+            else if(e.getCode()==KeyCode.ESCAPE){
+                pauseGame(primaryStage);
+            }
         });
+
 
 
     }

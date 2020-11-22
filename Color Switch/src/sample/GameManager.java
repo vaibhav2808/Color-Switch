@@ -41,7 +41,11 @@ public class GameManager {
     }
 
     public void startNewGame(Stage theStage){
-        game=new Game();
+        try {
+            game=new Game(theStage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         playGame(theStage);
     }
 
