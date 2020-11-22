@@ -36,7 +36,8 @@ public class Game extends AnimationTimer {
     private Scene gameScene,pauseScene;
     private StackPane gamePlayRoot;
     private int obstacleOnscreen=0;
-    public Game(Stage primaryStage) throws FileNotFoundException {
+    public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
+        this.manager=manager;
         ball=new Ball();
         player=new Player(ball);
         obstacles=new ArrayList<>(100);
@@ -112,8 +113,9 @@ public class Game extends AnimationTimer {
         this.start();
     }
 
-    public void exitToMainMenu(){
+    public void exitToMainMenu(Stage thestage){
         //throw exception to go to GameManager
+        manager.displayMainMenu(thestage);
     }
 
     public void resumeGame(Stage thestage){
@@ -127,8 +129,8 @@ public class Game extends AnimationTimer {
         //add code for display pause game menu
     }
 
-    public void restartGame(){
-
+    public void restartGame(Stage thestage){
+        manager.startNewGame(thestage);
     }
 
     public void saveGameAndExit(){
@@ -233,7 +235,7 @@ public class Game extends AnimationTimer {
             public void handle(ActionEvent e)
             {
                 // restart game
-                restartGame();
+                restartGame(primaryStage);
             }
         };
         btn2.setOnAction(eventBtn2);
@@ -259,10 +261,11 @@ public class Game extends AnimationTimer {
 //                } catch (FileNotFoundException fileNotFoundException) {
 //                    fileNotFoundException.printStackTrace();
 //                }
-                exitToMainMenu();
+                exitToMainMenu(primaryStage);
             }
         };
         btn4.setOnAction(eventBtn4);
 
     }
 }
+

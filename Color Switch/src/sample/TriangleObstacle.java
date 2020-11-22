@@ -3,7 +3,6 @@ package sample;
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 
 public class TriangleObstacle extends Obstacle{

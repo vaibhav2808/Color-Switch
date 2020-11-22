@@ -42,7 +42,7 @@ public class GameManager {
 
     public void startNewGame(Stage theStage){
         try {
-            game=new Game(theStage);
+            game=new Game(theStage,this);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -67,6 +67,10 @@ public class GameManager {
 
     public void playGame(Stage theStage){
         game.play(theStage);
+    }
+
+    public void displayMainMenu(Stage thestage){
+        thestage.setScene(mainMenuScene);
     }
 
     private void createMainMenuScreen(Stage primaryStage) throws FileNotFoundException {
