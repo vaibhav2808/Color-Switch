@@ -49,11 +49,14 @@ public class Obstacle implements Serializable {
         return false;
     }
 
-    public void createTransition(int duration){
+    public void createTransition(double duration){
         transition= new RotateTransition(Duration.seconds(duration),group);
         transition.setInterpolator(Interpolator.LINEAR);
         transition.setByAngle(360);
         transition.setCycleCount(RotateTransition.INDEFINITE);
+    }
+
+    public void startTransition(){
         transition.play();
     }
 }

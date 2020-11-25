@@ -136,7 +136,6 @@ public class GameManager implements Serializable {
             public void handle(ActionEvent e)
             {
                 GridPane listPane = new GridPane();
-
                 ListView gamesList = new ListView();
                 gamesList.setPrefWidth(360);
                 gamesList.setPrefHeight(600);

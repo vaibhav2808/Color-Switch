@@ -72,7 +72,7 @@ public class Game extends AnimationTimer implements Serializable {
 
             obstacleRenderedPosition-=DistancebetweenObstacles;
             //add transition
-           allObstacles.get(i).createTransition(4);
+           allObstacles.get(i).startTransition();
         }
         gamePlayRoot.getChildren().add(ball);
         gameScene.setOnKeyPressed(e->{
@@ -166,14 +166,21 @@ public class Game extends AnimationTimer implements Serializable {
     }
 
     private void createObstacles(){
+        double duration=4.5;
+        int diff=0;
         for(int i=0;i<10;i++) {
             allObstacles.add(new CircleObstacle(arr, 100));
             allObstacles.add(new PlusObstacle(200, arr));
             allObstacles.add(new TriangleObstacle(200, arr));
             allObstacles.add(new DiamondObstacle(200, 120, arr));
             allObstacles.add(new RectangleObstacle(200, 200, arr));
-        }
 
+            for(int j=diff;j<diff+5;j++){
+                allObstacles.get(j).createTransition(duration);
+            }
+            duration-=0.5;
+            diff+=5;
+        }
     }
 
     private void createPauseScene(Stage primaryStage) throws FileNotFoundException {
@@ -294,7 +301,7 @@ public class Game extends AnimationTimer implements Serializable {
         double obstacleY=obstaclesOnScreen.get(obstaclesOnScreen.size()-1).getGroup().getTranslateY();
         obstacle.getGroup().setTranslateY(obstacleY-450);
         gamePlayRoot.getChildren().add(obstacle.getGroup());
-        obstacle.createTransition(4);
+        obstacle.startTransition();
         int id=lastObstacleId%maxNumofObstaclesrendered;
         colorSwitcher[id]=obstacle.getColorSwitcher();
         colorSwitcher[id].getGroup().setTranslateY(obstacleY-200);
