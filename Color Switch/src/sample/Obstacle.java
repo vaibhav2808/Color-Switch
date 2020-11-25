@@ -2,8 +2,11 @@ package sample;
 
 import javafx.scene.Group;
 
-public class Obstacle {
+import java.io.Serializable;
+
+public class Obstacle implements Serializable {
     private int speed;
+    private double angle;
     private Group group;
     public Obstacle(){
         group=new Group();
@@ -19,5 +22,7 @@ public class Obstacle {
     public Group getGroup(){
         return group;
     }
-
+    public double getRotate(){
+        return ++angle%360;
+    }
 }

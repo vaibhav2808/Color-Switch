@@ -15,14 +15,17 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 import static java.lang.System.exit;
 
-public class GameManager {
+public class GameManager implements Serializable {
     private Game game;
     private int highScore;
     private Scene mainMenuScene;
+    private final Stage theStage;
     public GameManager(Stage primaryStage) throws FileNotFoundException {
+        this.theStage=primaryStage;
         createMainMenuScreen(primaryStage);
         primaryStage.setScene(mainMenuScene);
     }
@@ -40,7 +43,7 @@ public class GameManager {
         return highScore;
     }
 
-    public void startNewGame(Stage theStage){
+    public void startNewGame(){
         try {
             game=new Game(theStage,this);
         } catch (FileNotFoundException e) {
@@ -125,7 +128,7 @@ public class GameManager {
             public void handle(ActionEvent e)
             {
                 System.out.println("Start game");
-                startNewGame(primaryStage);
+                startNewGame();
 
             }
         };

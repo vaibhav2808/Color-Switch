@@ -17,13 +17,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
-public class Game extends AnimationTimer {
+import java.util.List;
+
+public class Game extends AnimationTimer implements Serializable {
     private final int maxNumofObstaclesrendered=5;
     private final int DistancebetweenObstacles=400;
     private long obstacleRenderedPosition;
@@ -78,9 +82,6 @@ public class Game extends AnimationTimer {
                 pauseGame(primaryStage);
             }
         });
-
-
-
     }
 
     @Override
@@ -94,6 +95,27 @@ public class Game extends AnimationTimer {
                 colorSwitcher[i].getGroup().setTranslateY(colorSwitcher[i].getGroup().getTranslateY()+5);
             }
             ball.setTranslateY(ball.getTranslateY()+5);
+        }
+        //ball out of screen
+        if(ball.getTranslateY()>320){
+            //code for gameover
+            gameOver();
+        }
+        //collision with color switcher
+        for(int i=0;i<maxNumofObstaclesrendered;i++){
+
+            //colorswitch collision
+            if(colorSwitcher[i].getGroup().getBoundsInParent().intersects(ball.getBoundsInParent())){
+                System.out.println("collides");
+            }
+
+            //obstacle collision
+            List<Node> list=obstacles.get(i).getGroup().getChildren();
+            for(Node n:list){
+                if(Shape.intersect((Shape)n,ball).getBoundsInLocal().getWidth()>0&&((Shape) n).getFill()==ball.getFill()||((Shape)n).getStroke()==ball.getFill()){
+                    gameOver();
+                }
+            }
         }
     }
 
@@ -129,8 +151,8 @@ public class Game extends AnimationTimer {
         //add code for display pause game menu
     }
 
-    public void restartGame(Stage thestage){
-        manager.startNewGame(thestage);
+    public void restartGame(){
+        manager.startNewGame();
     }
 
     public void saveGameAndExit(){
@@ -235,19 +257,13 @@ public class Game extends AnimationTimer {
             public void handle(ActionEvent e)
             {
                 // restart game
-                restartGame(primaryStage);
+                restartGame();
             }
         };
         btn2.setOnAction(eventBtn2);
         EventHandler<ActionEvent> eventBtn3 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
-                // save the game
-//                try {
-//                    mainMenu(primaryStage);
-//                } catch (FileNotFoundException fileNotFoundException) {
-//                    fileNotFoundException.printStackTrace();
-//                }
                 saveGameAndExit();
             }
         };
@@ -256,16 +272,14 @@ public class Game extends AnimationTimer {
             public void handle(ActionEvent e)
             {
                 //exit
-//                try {
-//                    mainMenu(primaryStage);
-//                } catch (FileNotFoundException fileNotFoundException) {
-//                    fileNotFoundException.printStackTrace();
-//                }
                 exitToMainMenu(primaryStage);
             }
         };
         btn4.setOnAction(eventBtn4);
+    }
 
+    private void gameOver(){
+        System.out.println("Game over");
     }
 }
 

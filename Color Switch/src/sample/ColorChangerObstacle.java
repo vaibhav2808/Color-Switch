@@ -6,7 +6,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 
-public class ColorChangerObstacle {
+import java.io.Serializable;
+
+public class ColorChangerObstacle implements Serializable {
     private Group group;
     private final int radius=15;
     ColorChangerObstacle(){
