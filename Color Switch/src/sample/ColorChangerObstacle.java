@@ -7,11 +7,14 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class ColorChangerObstacle implements Serializable {
     private Group group;
     private final int radius=15;
-    ColorChangerObstacle(){
+    private Paint colors[];
+    ColorChangerObstacle(Paint[] colors){
+        this.colors=colors;
         group=new Group();
         Arc arcs[]=new Arc[4];
         Paint color[]={Color.DEEPPINK,Color.LIGHTBLUE,Color.YELLOW,Color.DARKVIOLET};
@@ -23,6 +26,10 @@ public class ColorChangerObstacle implements Serializable {
             group.getChildren().add(arcs[i]);
         }
 
+    }
+    public Paint getRandomColor(){
+        int id=new Random().nextInt(colors.length);
+        return colors[id];
     }
     public Group getGroup(){
         return group;

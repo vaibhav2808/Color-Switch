@@ -72,8 +72,8 @@ public class GameManager implements Serializable {
         game.play(theStage);
     }
 
-    public void displayMainMenu(Stage thestage){
-        thestage.setScene(mainMenuScene);
+    public void displayMainMenu(){
+        theStage.setScene(mainMenuScene);
     }
 
     private void createMainMenuScreen(Stage primaryStage) throws FileNotFoundException {
@@ -129,7 +129,6 @@ public class GameManager implements Serializable {
             {
                 System.out.println("Start game");
                 startNewGame();
-
             }
         };
         btn1.setOnAction(eventBtn1);

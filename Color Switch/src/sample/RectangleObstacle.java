@@ -1,14 +1,18 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.util.List;
 
 public class RectangleObstacle extends Obstacle{
     private double length;
     private double breadth;
     public RectangleObstacle(double l, double b, Paint arr[]){
+        super(arr);
         Group group=getGroup();
         this.length=l;
         this.breadth=b;
@@ -57,5 +61,14 @@ public class RectangleObstacle extends Obstacle{
     public double getBreadth(){
         return breadth;
     }
-
+    @Override
+    public boolean collisionWithDiffColor(Ball ball) {
+        List<Node> list=getGroup().getChildren();
+        for(Node n:list){
+            if(Shape.intersect((Shape)n,ball).getBoundsInLocal().getWidth()>0&&!(((Shape) n).getFill().equals(ball.getFill()))){
+                return true;
+            }
+        }
+        return false;
+    }
 }

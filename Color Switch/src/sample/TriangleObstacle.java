@@ -8,6 +8,7 @@ import javafx.scene.shape.StrokeLineCap;
 public class TriangleObstacle extends Obstacle{
     private double side;
     public TriangleObstacle(double side, Paint color[]){
+        super(color);
         Group group=getGroup();
         this.side=side;
         Line l1=new Line(0,0,side,0);

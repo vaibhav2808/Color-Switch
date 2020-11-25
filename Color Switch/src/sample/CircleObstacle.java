@@ -1,12 +1,17 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Shape;
+
+import java.util.List;
 
 public class CircleObstacle extends Obstacle{
     private double radius;
     public CircleObstacle(Paint color[],double radius){
+        super(color);
         this.radius=radius;
         Arc arcs[]=new Arc[4];
         Arc innerArc,outerArc;

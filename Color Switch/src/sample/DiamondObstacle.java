@@ -9,6 +9,7 @@ public class DiamondObstacle extends Obstacle{
     private double angle;
     private double side;
     public DiamondObstacle(double s, double a, Paint color[]){
+        super(color);
         Group group=getGroup();
         this.side=s;
         this.angle=a;

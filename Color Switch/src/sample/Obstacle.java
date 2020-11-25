@@ -1,19 +1,30 @@
 package sample;
 
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Obstacle implements Serializable {
     private int speed;
-    private double angle;
     private Group group;
-    public Obstacle(){
+    private Paint colors[];
+    private RotateTransition transition;
+    private ColorChangerObstacle colorSwitcher;
+    public Obstacle(Paint colors[]){
+        this.colors=colors;
         group=new Group();
+        colorSwitcher=new ColorChangerObstacle(colors);
     }
 
-    public String getColor(){
-        return "Red";
+    public Paint[] getColor(){
+        return colors;
     }
 
     public void display(){
@@ -22,7 +33,27 @@ public class Obstacle implements Serializable {
     public Group getGroup(){
         return group;
     }
-    public double getRotate(){
-        return ++angle%360;
+
+    public ColorChangerObstacle getColorSwitcher(){
+        return colorSwitcher;
+    }
+
+
+    public boolean collisionWithDiffColor(Ball ball) {
+        List<Node> list=getGroup().getChildren();
+        for(Node n:list){
+            if(Shape.intersect((Shape)n,ball).getBoundsInLocal().getWidth()>0&&!(((Shape) n).getStroke().equals(ball.getFill()))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void createTransition(int duration){
+        transition= new RotateTransition(Duration.seconds(duration),group);
+        transition.setInterpolator(Interpolator.LINEAR);
+        transition.setByAngle(360);
+        transition.setCycleCount(RotateTransition.INDEFINITE);
+        transition.play();
     }
 }

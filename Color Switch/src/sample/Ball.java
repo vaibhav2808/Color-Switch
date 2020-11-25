@@ -20,18 +20,14 @@ public class Ball extends Circle implements ColorChanging, Serializable {
         this.setTranslateY(250);
     }
 
-    public void setColor(Paint s){
-        this.color = s;
-        this.setFill(color);
-    }
-
     @Override
     public Paint getColor(){
         return color;
     }
 
     @Override 
-    public void changeColor(){
-
+    public void changeColor(Paint color){
+        this.color=color;
+        this.setFill(color);
     }
 }
