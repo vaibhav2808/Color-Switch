@@ -220,7 +220,7 @@ public class Game extends AnimationTimer implements Serializable {
         FlowPane flow2 = new FlowPane();
         flow2.setAlignment(Pos.CENTER);
         flow1.setHgap(5);
-        Image star = new Image( new FileInputStream("src/assets/Star.png") );
+        Image star = new Image( new FileInputStream("src/assets/Star.jpeg") );
         ImageView imageViewStar = new ImageView(star);
         imageViewStar.setPreserveRatio(true);
         imageViewStar.setFitHeight(25);
