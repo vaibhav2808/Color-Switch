@@ -105,6 +105,8 @@ public class Game extends AnimationTimer implements Serializable {
             if(ball.getBoundsInParent().intersects(stars[i].getBoundsInParent())){
                 //add code for increasing stars
                 stars[i].setVisible(false);
+                stars[i].setTranslateY(2000);
+                player.collectStar();
             }
         }
 

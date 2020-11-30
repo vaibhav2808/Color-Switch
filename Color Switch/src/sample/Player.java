@@ -6,9 +6,10 @@ public class Player implements Serializable {
     private String name;
     private int score;
     private Ball ball;
-
+    private final int scoreForresurrection=10;
     public Player(Ball ball){
         this.ball=ball;
+        this.score=0;
     }
 
     public void setScore(int s){
@@ -22,11 +23,12 @@ public class Player implements Serializable {
     }
     
     public boolean canResurrect(){
-        return false;
+        return score>=scoreForresurrection;
     }
 
     public void collectStar(){
-
+        score+=1;
+        System.out.println(score);
     }
 
     public void jump(){
