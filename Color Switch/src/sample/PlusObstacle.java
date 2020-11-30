@@ -15,8 +15,13 @@ public class PlusObstacle extends Obstacle{
     private double length;
     public PlusObstacle(double length, Paint[] color){
         super(color);
-        Group group=getGroup();
         this.length=length;
+        display();
+    }
+    @Override
+    public void display() {
+        Group group=getGroup();
+        Paint color[]=getColor();
         Line l1=new Line(0,length/2,length/2,length/2);
         l1.setStroke(color[0]);
         l1.setStrokeWidth(10);
@@ -42,8 +47,8 @@ public class PlusObstacle extends Obstacle{
         circle.setStroke(Color.BLACK);
         circle.setRadius(8);
         group.getChildren().addAll(l1,l2,l3,l4,circle);
+        group.setTranslateY(getY());
     }
-
     public void setLength(double l){
         this.length = l;
     }

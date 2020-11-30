@@ -11,12 +11,13 @@ import javafx.util.Duration;
 import java.io.Serializable;
 import java.util.List;
 
-public class Obstacle implements Serializable {
+public abstract class Obstacle implements Serializable {
     private int speed;
-    private Group group;
+    private transient Group group;
     private Paint colors[];
     private RotateTransition transition;
     private ColorChangerObstacle colorSwitcher;
+    private double translateY=0.0;
     public Obstacle(Paint colors[]){
         this.colors=colors;
         group=new Group();
@@ -27,9 +28,7 @@ public class Obstacle implements Serializable {
         return colors;
     }
 
-    public void display(){
-
-    }
+    public abstract void display();
     public Group getGroup(){
         return group;
     }
@@ -58,5 +57,17 @@ public class Obstacle implements Serializable {
 
     public void startTransition(){
         transition.play();
+    }
+
+    public void serialise(){
+        this.translateY=group.getTranslateY();
+    }
+
+    public void deserialise(){
+        display();
+    }
+
+    public double getY(){
+        return translateY;
     }
 }

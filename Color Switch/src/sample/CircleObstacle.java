@@ -13,10 +13,17 @@ public class CircleObstacle extends Obstacle{
     public CircleObstacle(Paint color[],double radius){
         super(color);
         this.radius=radius;
+        display();
+    }
+
+    @Override
+    public void display() {
+
         Arc arcs[]=new Arc[4];
+        Paint color[]=getColor();
         Arc innerArc,outerArc;
-        for(int i=0;i<4;i++){
-            arcs[i]=new Arc(180,200,radius,radius,90*i,90);
+        for(int i=0;i<4;i++) {
+            arcs[i] = new Arc(180, 200, radius, radius, 90 * i, 90);
 //            innerArc=new Arc(180,200,radius-10,radius-10,90*i,90);
 //            outerArc=new Arc(180,200,radius,radius,90*i,90);
 //            Shape shape= Shape.subtract(outerArc,innerArc);
@@ -36,12 +43,7 @@ public class CircleObstacle extends Obstacle{
 //            System.out.println(shape.getBoundsInParent());
 //            System.out.println(shape.getLayoutBounds());
         }
-    }
-
-    @Override
-    public void display() {
-
-
+        getGroup().setTranslateY(getY());
     }
 
     public void setRadius(double r){

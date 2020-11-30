@@ -8,32 +8,15 @@ import javafx.scene.shape.StrokeLineCap;
 public class DiamondObstacle extends Obstacle{
     private double angle;
     private double side;
-    public DiamondObstacle(double s, double a, Paint color[]){
+    public DiamondObstacle(double s, double angle, Paint color[]){
         super(color);
-        Group group=getGroup();
         this.side=s;
-        this.angle=a;
-        Line l1=new Line(0,0,side,0);
-        l1.setStroke(color[0]);
-        l1.setStrokeWidth(10);
-        l1.setStrokeLineCap(StrokeLineCap.ROUND);
-        Line l2=new Line(0,0,side*Math.sin(a),side*Math.cos(a));
-        l2.setStroke(color[1]);
-        l2.setStrokeWidth(10);
-        l2.setStrokeLineCap(StrokeLineCap.ROUND);
-        Line l3=new Line(side,0,side*Math.sin(a)+side,side*Math.cos(a));
-        l3.setStroke(color[2]);
-        l3.setStrokeWidth(10);
-        l3.setStrokeLineCap(StrokeLineCap.ROUND);
-        Line l4=new Line(side*Math.sin(a),side*Math.cos(a),side*Math.sin(a)+side,side*Math.cos(a));
-        l4.setStroke(color[3]);
-        l4.setStrokeWidth(10);
-        l4.setStrokeLineCap(StrokeLineCap.ROUND);
-        group.getChildren().addAll(l1,l2,l3,l4);
+        this.angle=angle;
+        display();
     }
 
-    public void setAngle(double a){
-        this.angle = a;
+    public void setAngle(double angle){
+        this.angle = angle;
     }
     public void setSide(double s){
         this.side = s;
@@ -43,5 +26,29 @@ public class DiamondObstacle extends Obstacle{
     }
     public double getSide(){
         return side;
+    }
+    @Override
+    public void display() {
+        Group group=getGroup();
+
+        Paint color[]=getColor();
+        Line l1=new Line(0,0,side,0);
+        l1.setStroke(color[0]);
+        l1.setStrokeWidth(10);
+        l1.setStrokeLineCap(StrokeLineCap.ROUND);
+        Line l2=new Line(0,0,side*Math.sin(angle),side*Math.cos(angle));
+        l2.setStroke(color[1]);
+        l2.setStrokeWidth(10);
+        l2.setStrokeLineCap(StrokeLineCap.ROUND);
+        Line l3=new Line(side,0,side*Math.sin(angle)+side,side*Math.cos(angle));
+        l3.setStroke(color[2]);
+        l3.setStrokeWidth(10);
+        l3.setStrokeLineCap(StrokeLineCap.ROUND);
+        Line l4=new Line(side*Math.sin(angle),side*Math.cos(angle),side*Math.sin(angle)+side,side*Math.cos(angle));
+        l4.setStroke(color[3]);
+        l4.setStrokeWidth(10);
+        l4.setStrokeLineCap(StrokeLineCap.ROUND);
+        group.getChildren().addAll(l1,l2,l3,l4);
+        group.setTranslateY(getY());
     }
 }

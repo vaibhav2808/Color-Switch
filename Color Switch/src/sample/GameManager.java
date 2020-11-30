@@ -11,8 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -60,8 +63,15 @@ public class GameManager implements Serializable {
 
     }
 
-    public void saveGame(){
-
+    public void saveGame(Stage theStage){
+        DirectoryChooser directoryChooser=new DirectoryChooser();
+        Button button =new Button("Select save location");
+        button.setOnAction(e->{
+            File file=directoryChooser.showDialog(theStage);
+        });
+        //should store path
+        String path;
+        
     }
 
     public void exitGame(){
@@ -74,6 +84,10 @@ public class GameManager implements Serializable {
 
     public void displayMainMenu(){
         theStage.setScene(mainMenuScene);
+    }
+
+    private void serialise(){
+
     }
 
     private void createMainMenuScreen(Stage primaryStage) throws FileNotFoundException {
