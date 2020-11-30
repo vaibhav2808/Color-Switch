@@ -31,15 +31,16 @@ public class Game extends AnimationTimer implements Serializable {
     private final int maxNumofObstaclesrendered=5;
     private final int DistancebetweenObstacles=450;
     private long obstacleRenderedPosition;
-    private ColorChangerObstacle colorSwitcher[]=new ColorChangerObstacle[maxNumofObstaclesrendered];
-    private Paint arr[]={Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW};
+    private volatile ColorChangerObstacle colorSwitcher[]=new ColorChangerObstacle[maxNumofObstaclesrendered];
+    private transient Paint arr[]={Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW};
     private Ball ball;
     private Player player;
     private GameManager manager;
     private ArrayList<Obstacle> allObstacles,obstaclesOnScreen;
-    private Scene gameScene,pauseScene;
-    private StackPane gamePlayRoot;
+    private transient Scene gameScene,pauseScene;
+    private transient StackPane gamePlayRoot;
     private int lastObstacleId=maxNumofObstaclesrendered;
+    private Star[] stars=new Star[maxNumofObstaclesrendered];
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
         ball=new Ball();
@@ -64,16 +65,18 @@ public class Game extends AnimationTimer implements Serializable {
         for (int i = 0; i < maxNumofObstaclesrendered ; i++) {
             colorSwitcher[i]=allObstacles.get(i).getColorSwitcher();
             colorSwitcher[i].getGroup().setTranslateY(obstacleRenderedPosition+250);
-
+            stars[i]=new Star();
+            stars[i].setTranslateY(obstacleRenderedPosition);
             allObstacles.get(i).getGroup().setTranslateY(obstacleRenderedPosition);
             gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),allObstacles.get(i).getGroup());
-
+            gamePlayRoot.getChildren().add(stars[i]);
             obstaclesOnScreen.add(allObstacles.get(i));
 
             obstacleRenderedPosition-=DistancebetweenObstacles;
             //add transition
            allObstacles.get(i).startTransition();
         }
+        colorSwitcher[0].getGroup().setTranslateY(2000);
         gamePlayRoot.getChildren().add(ball);
         gameScene.setOnKeyPressed(e->{
             if(e.getCode()== KeyCode.SPACE){
@@ -89,27 +92,19 @@ public class Game extends AnimationTimer implements Serializable {
     public void handle(long l) {
         ball.setTranslateY(ball.getTranslateY()+1);
 
-        if(ball.getTranslateY()<-50) {
-            for(Obstacle o:obstaclesOnScreen){
-                o.getGroup().setTranslateY(o.getGroup().getTranslateY()+5);
-            }
-            for(int i=0;i<maxNumofObstaclesrendered;i++){
-                colorSwitcher[i].getGroup().setTranslateY(colorSwitcher[i].getGroup().getTranslateY()+5);
-            }
-            ball.setTranslateY(ball.getTranslateY()+5);
-        }
-        //ball out of screen
-        if(ball.getTranslateY()>320){
-            //code for gameover
-            gameOver();
-        }
         //collision with color switcher
         for(int i=0;i<maxNumofObstaclesrendered;i++){
             //colorswitch collision
             if(colorSwitcher[i].getGroup().getBoundsInParent().intersects(ball.getBoundsInParent())){
 //                System.out.println("collides");
+                colorSwitcher[i].getGroup().setDisable(true);
+                colorSwitcher[i].getGroup().setTranslateY(2000);
                 ball.changeColor(colorSwitcher[i].getRandomColor());
                 renderNextObstacle();
+            }
+            if(ball.getBoundsInParent().intersects(stars[i].getBoundsInParent())){
+                //add code for increasing stars
+                stars[i].setVisible(false);
             }
         }
 
@@ -119,6 +114,23 @@ public class Game extends AnimationTimer implements Serializable {
                 gameOver();
             }
         }
+
+        if(ball.getTranslateY()<-50) {
+            for(Obstacle o:obstaclesOnScreen){
+                o.getGroup().setTranslateY(o.getGroup().getTranslateY()+5);
+            }
+            for(int i=0;i<maxNumofObstaclesrendered;i++){
+                colorSwitcher[i].getGroup().setTranslateY(colorSwitcher[i].getGroup().getTranslateY()+5);
+                stars[i].setTranslateY(stars[i].getTranslateY()+5);
+            }
+            ball.setTranslateY(ball.getTranslateY()+5);
+        }
+        //ball out of screen
+        if(ball.getTranslateY()>320){
+            //code for gameover
+            gameOver();
+        }
+
     }
 
     public void setManager(GameManager m){
@@ -158,7 +170,8 @@ public class Game extends AnimationTimer implements Serializable {
     }
 
     public void saveGameAndExit(){
-
+        manager.saveGame();
+        manager.displayMainMenu();
     }
 
     public void continueGame(){
@@ -305,6 +318,8 @@ public class Game extends AnimationTimer implements Serializable {
         int id=lastObstacleId%maxNumofObstaclesrendered;
         colorSwitcher[id]=obstacle.getColorSwitcher();
         colorSwitcher[id].getGroup().setTranslateY(obstacleY-200);
+        stars[id].setTranslateY(obstacleY);
+        stars[id].setVisible(true);
         lastObstacleId++;
 
         obstaclesOnScreen.add(obstacle);
@@ -312,16 +327,12 @@ public class Game extends AnimationTimer implements Serializable {
         gamePlayRoot.getChildren().clear();
 
         //add everything back to screen again
+        for(Obstacle o:obstaclesOnScreen){
+            gamePlayRoot.getChildren().add(o.getGroup());
+        }
         gamePlayRoot.getChildren().add(ball);
         for(int i=0;i<maxNumofObstaclesrendered;i++){
-//            System.out.println("Color switcher "+i+" "+colorSwitcher[i].getGroup().getTranslateY());
-            gamePlayRoot.getChildren().add(colorSwitcher[i].getGroup());
-        }
-//        int k=0;
-        for(Obstacle o:obstaclesOnScreen){
-//            System.out.println("Obstacle "+k+" "+o.getGroup().getTranslateY());
-            gamePlayRoot.getChildren().add(o.getGroup());
-//            k++;
+            gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),stars[i]);
         }
     }
 }

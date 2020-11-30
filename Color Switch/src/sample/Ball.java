@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
 import java.io.Serializable;
 
 public class Ball extends Circle implements ColorChanging, Serializable {
-    private Paint color;
+    private transient Paint color;
     private final int radius;
 
     public Ball(){

@@ -15,18 +15,15 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
+import java.io.*;
 
 import static java.lang.System.exit;
 
 public class GameManager implements Serializable {
     private Game game;
     private int highScore;
-    private Scene mainMenuScene;
-    private final Stage theStage;
+    private transient Scene mainMenuScene;
+    private transient final Stage theStage;
     public GameManager(Stage primaryStage) throws FileNotFoundException {
         this.theStage=primaryStage;
         createMainMenuScreen(primaryStage);
@@ -59,19 +56,37 @@ public class GameManager implements Serializable {
 
     }
 
-    public void continuePreviousGame(){
-
+    public void continuePreviousGame(String path){
+        ObjectInputStream in=null;
+        try{
+            in=new ObjectInputStream(new FileInputStream(path));
+            GameManager newmanager=(GameManager)in.readObject();
+            this.game= newmanager.getGame();
+            game.setManager(this);
+            in.close();
+        }
+        catch(IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
-    public void saveGame(Stage theStage){
-        DirectoryChooser directoryChooser=new DirectoryChooser();
-        Button button =new Button("Select save location");
-        button.setOnAction(e->{
-            File file=directoryChooser.showDialog(theStage);
-        });
+    public void saveGame(){
+//        DirectoryChooser directoryChooser=new DirectoryChooser();
+//        Button button =new Button("Select save location");
+//        button.setOnAction(e->{
+//            File file=directoryChooser.showDialog(theStage);
+//        });
         //should store path
-        String path;
-        
+        String path="savedgame1.txt";
+        ObjectOutputStream out=null;
+        try{
+            out=new ObjectOutputStream(new FileOutputStream(path));
+            out.writeObject(this);
+            out.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void exitGame(){

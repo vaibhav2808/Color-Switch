@@ -14,8 +14,8 @@ import java.util.List;
 public abstract class Obstacle implements Serializable {
     private int speed;
     private transient Group group;
-    private Paint colors[];
-    private RotateTransition transition;
+    private transient Paint colors[];
+    private transient RotateTransition transition;
     private ColorChangerObstacle colorSwitcher;
     private double translateY=0.0;
     public Obstacle(Paint colors[]){

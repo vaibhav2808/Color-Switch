@@ -10,11 +10,20 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class ColorChangerObstacle implements Serializable {
-    private Group group;
+    private transient Group group;
     private final int radius=15;
-    private Paint colors[];
+    private transient Paint colors[];
     ColorChangerObstacle(Paint[] colors){
         this.colors=colors;
+        display();
+
+    }
+    public Paint getRandomColor(){
+        int id=new Random().nextInt(colors.length);
+        return colors[id];
+    }
+
+    public void display(){
         group=new Group();
         Arc arcs[]=new Arc[4];
         Paint color[]={Color.DEEPPINK,Color.LIGHTBLUE,Color.YELLOW,Color.DARKVIOLET};
@@ -25,11 +34,6 @@ public class ColorChangerObstacle implements Serializable {
             arcs[i].setType(ArcType.ROUND);
             group.getChildren().add(arcs[i]);
         }
-
-    }
-    public Paint getRandomColor(){
-        int id=new Random().nextInt(colors.length);
-        return colors[id];
     }
     public Group getGroup(){
         return group;
