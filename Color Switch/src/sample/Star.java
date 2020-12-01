@@ -9,7 +9,7 @@ public class Star extends ImageView implements Serializable{
     private ImageView star;
     private double x,y;
     Star(){
-        super(new Image("file:src/assets/star.png"));
+        super(new Image("file:src/assets/Star.png"));
 //        this.x=x;
 //        this.y=y;
 //        this.setX(x);
