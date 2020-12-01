@@ -74,7 +74,7 @@ public class Game extends AnimationTimer implements Serializable {
 
             obstacleRenderedPosition-=DistancebetweenObstacles;
             //add transition
-           allObstacles.get(i).startTransition();
+            allObstacles.get(i).startTransition();
         }
         colorSwitcher[0].getGroup().setTranslateY(2000);
         gamePlayRoot.getChildren().add(ball);
@@ -222,7 +222,7 @@ public class Game extends AnimationTimer implements Serializable {
         FlowPane flow2 = new FlowPane();
         flow2.setAlignment(Pos.CENTER);
         flow1.setHgap(5);
-        Image star = new Image( new FileInputStream("src/assets/Star.jpeg") );
+        Image star = new Image( new FileInputStream("src/assets/Star.png") );
         ImageView imageViewStar = new ImageView(star);
         imageViewStar.setPreserveRatio(true);
         imageViewStar.setFitHeight(25);
@@ -375,4 +375,3 @@ public class Game extends AnimationTimer implements Serializable {
         }
     }
 }
-
