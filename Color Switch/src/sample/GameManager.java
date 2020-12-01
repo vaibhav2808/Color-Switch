@@ -57,6 +57,7 @@ public class GameManager implements Serializable {
     }
 
     public void continuePreviousGame(String path){
+        game.serialise();
         ObjectInputStream in=null;
         try{
             in=new ObjectInputStream(new FileInputStream(path));
@@ -68,6 +69,7 @@ public class GameManager implements Serializable {
         catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
+        game.deserialise(theStage);
     }
 
     public void saveGame(){
@@ -90,7 +92,7 @@ public class GameManager implements Serializable {
     }
 
     public void exitGame(){
-
+        exit(0);
     }
 
     public void playGame(Stage theStage){
@@ -99,10 +101,6 @@ public class GameManager implements Serializable {
 
     public void displayMainMenu(){
         theStage.setScene(mainMenuScene);
-    }
-
-    private void serialise(){
-
     }
 
     private void createMainMenuScreen(Stage primaryStage) throws FileNotFoundException {
@@ -198,7 +196,7 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventBtn3 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
-                exit(0);
+                exitGame();
             }
         };
         btn3.setOnAction(eventBtn3);

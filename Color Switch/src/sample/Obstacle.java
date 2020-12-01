@@ -65,6 +65,7 @@ public abstract class Obstacle implements Serializable {
 
     public void deserialise(){
         display();
+        group.setTranslateY(translateY);
         colorSwitcher.display();
     }
 

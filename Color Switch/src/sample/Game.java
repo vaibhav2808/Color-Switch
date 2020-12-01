@@ -359,6 +359,20 @@ public class Game extends AnimationTimer implements Serializable {
         }
 
         gameScene=new Scene(gamePlayRoot,360,640,Color.BLACK);
+        gameScene.setOnKeyPressed(e->{
+            if(e.getCode()== KeyCode.SPACE){
+                player.jump();
+            }
+            else if(e.getCode()==KeyCode.ESCAPE){
+                pauseGame(theStage);
+            }
+        });
+    }
+
+    public void serialise(){
+        for(Obstacle o:obstaclesOnScreen){
+            o.serialise();
+        }
     }
 }
 
