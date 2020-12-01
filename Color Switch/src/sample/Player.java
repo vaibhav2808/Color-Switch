@@ -28,7 +28,6 @@ public class Player implements Serializable {
 
     public void collectStar(){
         score+=1;
-        System.out.println(score);
     }
 
     public void jump(){

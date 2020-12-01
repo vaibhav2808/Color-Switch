@@ -11,7 +11,7 @@ import java.util.List;
 public class RectangleObstacle extends Obstacle{
     private double length;
     private double breadth;
-    public RectangleObstacle(double l, double b, Paint arr[]){
+    public RectangleObstacle(double l, double b, SerializableColor arr[]){
         super(arr);
 
         this.length=l;
@@ -45,13 +45,13 @@ public class RectangleObstacle extends Obstacle{
     @Override
     public void display() {
         Rectangle r,r2;
-        Paint color[]=getColor();
+        SerializableColor color[]=getColor();
         Group group=getGroup();
         //top side
         r=new Rectangle(0,0,length,breadth);
         r2=new Rectangle(0,10,length,breadth);
         Shape shape= Shape.subtract(r,r2);
-        shape.setFill(color[3]);
+        shape.setFill(color[3].getFXColor());
         group.getChildren().add(shape);
 
 
@@ -59,21 +59,21 @@ public class RectangleObstacle extends Obstacle{
         r=new Rectangle(0,0,length,breadth);
         r2=new Rectangle(0,0,length,breadth-10);
         shape= Shape.subtract(r,r2);
-        shape.setFill(color[1]);
+        shape.setFill(color[1].getFXColor());
         group.getChildren().add(shape);
 
         //left side
         r=new Rectangle(0,0,length,breadth);
         r2=new Rectangle(10,0,length,breadth);
         shape= Shape.subtract(r,r2);
-        shape.setFill(color[2]);
+        shape.setFill(color[2].getFXColor());
         group.getChildren().add(shape);
 
         //right side
         r=new Rectangle(0,0,length,breadth);
         r2=new Rectangle(0,0,length-10,breadth);
         shape= Shape.subtract(r,r2);
-        shape.setFill(color[0]);
+        shape.setFill(color[0].getFXColor());
         group.getChildren().add(shape);
         group.setTranslateY(getY());
     }

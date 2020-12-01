@@ -14,17 +14,17 @@ import java.util.List;
 public abstract class Obstacle implements Serializable {
     private int speed;
     private transient Group group;
-    private transient Paint colors[];
+    private SerializableColor colors[];
     private transient RotateTransition transition;
     private ColorChangerObstacle colorSwitcher;
     private double translateY=0.0;
-    public Obstacle(Paint colors[]){
+    public Obstacle(SerializableColor colors[]){
         this.colors=colors;
         group=new Group();
         colorSwitcher=new ColorChangerObstacle(colors);
     }
 
-    public Paint[] getColor(){
+    public SerializableColor[] getColor(){
         return colors;
     }
 
@@ -65,6 +65,7 @@ public abstract class Obstacle implements Serializable {
 
     public void deserialise(){
         display();
+        colorSwitcher.display();
     }
 
     public double getY(){

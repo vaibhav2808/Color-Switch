@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CircleObstacle extends Obstacle{
     private double radius;
-    public CircleObstacle(Paint color[],double radius){
+    public CircleObstacle(SerializableColor color[],double radius){
         super(color);
         this.radius=radius;
         display();
@@ -20,7 +20,7 @@ public class CircleObstacle extends Obstacle{
     public void display() {
 
         Arc arcs[]=new Arc[4];
-        Paint color[]=getColor();
+        SerializableColor color[]=getColor();
         Arc innerArc,outerArc;
         for(int i=0;i<4;i++) {
             arcs[i] = new Arc(180, 200, radius, radius, 90 * i, 90);
@@ -30,7 +30,7 @@ public class CircleObstacle extends Obstacle{
 //            shape.i
 //            shape.setFill(color[i]);
 
-            arcs[i].setStroke(color[i]);
+            arcs[i].setStroke(color[i].getFXColor());
             arcs[i].setStrokeWidth(10);
             arcs[i].setType(ArcType.OPEN);
             arcs[i].setFill(null);

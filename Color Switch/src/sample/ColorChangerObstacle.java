@@ -12,15 +12,15 @@ import java.util.Random;
 public class ColorChangerObstacle implements Serializable {
     private transient Group group;
     private final int radius=15;
-    private transient Paint colors[];
-    ColorChangerObstacle(Paint[] colors){
+    private SerializableColor colors[];
+    ColorChangerObstacle(SerializableColor[] colors){
         this.colors=colors;
         display();
 
     }
-    public Paint getRandomColor(){
+    public Color getRandomColor(){
         int id=new Random().nextInt(colors.length);
-        return colors[id];
+        return colors[id].getFXColor();
     }
 
     public void display(){

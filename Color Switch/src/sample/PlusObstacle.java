@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PlusObstacle extends Obstacle{
     private double length;
-    public PlusObstacle(double length, Paint[] color){
+    public PlusObstacle(double length, SerializableColor[] color){
         super(color);
         this.length=length;
         display();
@@ -21,18 +21,18 @@ public class PlusObstacle extends Obstacle{
     @Override
     public void display() {
         Group group=getGroup();
-        Paint color[]=getColor();
+        SerializableColor color[]=getColor();
         Line l1=new Line(0,length/2,length/2,length/2);
-        l1.setStroke(color[0]);
+        l1.setStroke(color[0].getFXColor());
         l1.setStrokeWidth(10);
         Line l2=new Line(length/2,length/2,length,length/2);
-        l2.setStroke(color[1]);
+        l2.setStroke(color[1].getFXColor());
         l2.setStrokeWidth(10);
         Line l3=new Line(length/2,0,length/2,length/2);
-        l3.setStroke(color[2]);
+        l3.setStroke(color[2].getFXColor());
         l3.setStrokeWidth(10);
         Line l4=new Line(length/2,length/2,length/2,length);
-        l4.setStroke(color[3]);
+        l4.setStroke(color[3].getFXColor());
         l4.setStrokeWidth(10);
         l1.setStrokeLineCap(StrokeLineCap.ROUND);
         l2.setStrokeLineCap(StrokeLineCap.ROUND);

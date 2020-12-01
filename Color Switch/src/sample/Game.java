@@ -32,7 +32,7 @@ public class Game extends AnimationTimer implements Serializable {
     private final int DistancebetweenObstacles=450;
     private long obstacleRenderedPosition;
     private volatile ColorChangerObstacle colorSwitcher[]=new ColorChangerObstacle[maxNumofObstaclesrendered];
-    private transient Paint arr[]={Color.BLUE,Color.RED,Color.GREEN,Color.YELLOW};
+    private SerializableColor arr[]={new SerializableColor(Color.BLUE),new SerializableColor(Color.RED),new SerializableColor(Color.GREEN),new SerializableColor(Color.YELLOW)};
     private Ball ball;
     private Player player;
     private GameManager manager;
@@ -44,7 +44,7 @@ public class Game extends AnimationTimer implements Serializable {
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
         ball=new Ball();
-        ball.setFill(arr[0]);
+        ball.setFill(arr[0].getFXColor());
         player=new Player(ball);
         allObstacles=new ArrayList<>(100);
         obstaclesOnScreen=new ArrayList<>();
@@ -99,7 +99,7 @@ public class Game extends AnimationTimer implements Serializable {
 //                System.out.println("collides");
                 colorSwitcher[i].getGroup().setDisable(true);
                 colorSwitcher[i].getGroup().setTranslateY(2000);
-                ball.changeColor(colorSwitcher[i].getRandomColor());
+                ball.changeColor(new SerializableColor(colorSwitcher[i].getRandomColor()));
                 renderNextObstacle();
             }
             if(ball.getBoundsInParent().intersects(stars[i].getBoundsInParent())){
@@ -336,6 +336,29 @@ public class Game extends AnimationTimer implements Serializable {
         for(int i=0;i<maxNumofObstaclesrendered;i++){
             gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),stars[i]);
         }
+    }
+
+    public void deserialise(Stage theStage){
+        for(Obstacle o:allObstacles){
+            o.deserialise();
+        }
+        try {
+            createPauseScene(theStage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        gamePlayRoot=new StackPane();
+        gamePlayRoot.setStyle("-fx-background-color: BLACK");
+
+        //adding obtscales, star on screen
+        for(Obstacle o:obstaclesOnScreen){
+            gamePlayRoot.getChildren().add(o.getGroup());
+        }
+        for(int i=0;i<maxNumofObstaclesrendered;i++){
+            gamePlayRoot.getChildren().addAll(stars[i],colorSwitcher[i].getGroup());
+        }
+
+        gameScene=new Scene(gamePlayRoot,360,640,Color.BLACK);
     }
 }
 
