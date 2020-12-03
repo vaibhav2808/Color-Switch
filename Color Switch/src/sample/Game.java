@@ -189,8 +189,9 @@ public class Game extends AnimationTimer implements Serializable {
             allObstacles.add(new TriangleObstacle(200, arr));
             allObstacles.add(new DiamondObstacle(200, 120, arr));
             allObstacles.add(new RectangleObstacle(200, 200, arr));
+            allObstacles.add(new DoubleCIrcleObstacle(arr));
 
-            for(int j=diff;j<diff+5;j++){
+            for(int j=diff;j<diff+6;j++){
                 allObstacles.get(j).createTransition(duration);
             }
             duration-=0.5;
@@ -306,6 +307,7 @@ public class Game extends AnimationTimer implements Serializable {
 
     private void gameOver(){
 //        manager.displayMainMenu();
+        System.out.println("Game over");
     }
 
     private void renderNextObstacle(){

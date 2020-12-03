@@ -14,8 +14,8 @@ public class Star extends ImageView implements Serializable{
 //        this.y=y;
 //        this.setX(x);
 //        this.setY(y);
-        this.setFitHeight(20);
-        this.setFitWidth(20);
+        this.setFitHeight(50);
+        this.setFitWidth(50);
         this.setPreserveRatio(true);
 //        loadImage();
     }
