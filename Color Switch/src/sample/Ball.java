@@ -6,20 +6,24 @@ import javafx.scene.shape.Circle;
 
 import java.io.Serializable;
 
-public class Ball extends Circle implements ColorChanging, Serializable {
+public class Ball implements ColorChanging, Serializable {
     private SerializableColor color;
     private final int radius;
-
+    private transient Circle ball;
+    private double y=250;
     public Ball(){
-        super();
+        color=new SerializableColor(Color.WHITE);
         this.radius=10;
-        this.setRadius(radius);
-        this.setFill(Color.WHITE);
-        this.setCenterX(180);
-        this.setCenterY(590);
-        this.setTranslateY(250);
+        display();
     }
-
+    public void display(){
+        ball=new Circle();
+        ball.setRadius(radius);
+        ball.setFill(color.getFXColor());
+        ball.setCenterX(180);
+        ball.setCenterY(590);
+        ball.setTranslateY(y);
+    }
     @Override
     public Paint getColor(){
         return color.getFXColor();
@@ -28,6 +32,18 @@ public class Ball extends Circle implements ColorChanging, Serializable {
     @Override 
     public void changeColor(SerializableColor color){
         this.color=color;
-        this.setFill(color.getFXColor());
+        ball.setFill(color.getFXColor());
+    }
+
+    public void serialise(){
+        y=ball.getTranslateY();
+    }
+
+    public void deserialise(){
+        display();
+    }
+
+    public Circle get(){
+        return ball;
     }
 }

@@ -39,14 +39,7 @@ public class PlusObstacle extends Obstacle{
         l3.setStrokeLineCap(StrokeLineCap.ROUND);
         l4.setStrokeLineCap(StrokeLineCap.ROUND);
 
-
-        Circle circle=new Circle();
-        circle.setCenterX(length/2);
-        circle.setCenterY(length/2);
-        circle.setFill(Color.BLACK);
-        circle.setStroke(Color.BLACK);
-        circle.setRadius(8);
-        group.getChildren().addAll(l1,l2,l3,l4,circle);
+        group.getChildren().addAll(l1,l2,l3,l4);
         group.setTranslateY(getY());
     }
     public void setLength(double l){

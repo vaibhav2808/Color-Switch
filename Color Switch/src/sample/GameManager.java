@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -53,23 +54,32 @@ public class GameManager implements Serializable {
     }
 
     public void savedGamesList(){
+        FileChooser fileChooser=new FileChooser();
+        Button button = new Button("Select File");
+        button.setOnAction(e -> {
+            File selectedFile = fileChooser.showOpenDialog(theStage);
+            continuePreviousGame(selectedFile.getAbsolutePath());
+        });
 
+        VBox vBox = new VBox(button);
+        Scene scene = new Scene(vBox, 360, 640);
+        theStage.setScene(scene);
     }
 
     public void continuePreviousGame(String path){
-        game.serialise();
         ObjectInputStream in=null;
         try{
             in=new ObjectInputStream(new FileInputStream(path));
             GameManager newmanager=(GameManager)in.readObject();
             this.game= newmanager.getGame();
             game.setManager(this);
+            game.deserialise(theStage);
+            playGame(theStage);
             in.close();
         }
         catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
-        game.deserialise(theStage);
     }
 
     public void saveGame(){
@@ -79,6 +89,7 @@ public class GameManager implements Serializable {
 //            File file=directoryChooser.showDialog(theStage);
 //        });
         //should store path
+        game.serialise();
         String path="savedgame1.txt";
         ObjectOutputStream out=null;
         try{
@@ -162,34 +173,35 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventBtn2 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
-                GridPane listPane = new GridPane();
-                ListView gamesList = new ListView();
-                gamesList.setPrefWidth(360);
-                gamesList.setPrefHeight(600);
-                gamesList.setStyle("-fx-font-size:20");
-                gamesList.getItems().add("Savestate 1");
-                gamesList.getItems().add("Savestate 2");
-                gamesList.getItems().add("Savestate 3");
-
-                Button goBack = new Button("Back to Main Menu");
-                goBack.setAlignment(Pos.CENTER);
-                goBack.setPrefSize(360, 10);
-                goBack.setStyle("-fx-font-size:20");
-                goBack.setTextFill(Color.DARKBLUE);
-
-                listPane.add(gamesList, 0, 0);
-                listPane.add(goBack, 0, 1);
-
-                EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
-                    public  void handle(ActionEvent e)
-                    {
-                        primaryStage.setScene( primaryScene );
-                    }
-                };
-                goBack.setOnAction(eventGoBack);
-
-                Scene continueGameScene = new Scene(listPane, 360, 640);
-                primaryStage.setScene(continueGameScene);
+//                GridPane listPane = new GridPane();
+//                ListView gamesList = new ListView();
+//                gamesList.setPrefWidth(360);
+//                gamesList.setPrefHeight(600);
+//                gamesList.setStyle("-fx-font-size:20");
+//                gamesList.getItems().add("Savestate 1");
+//                gamesList.getItems().add("Savestate 2");
+//                gamesList.getItems().add("Savestate 3");
+//
+//                Button goBack = new Button("Back to Main Menu");
+//                goBack.setAlignment(Pos.CENTER);
+//                goBack.setPrefSize(360, 10);
+//                goBack.setStyle("-fx-font-size:20");
+//                goBack.setTextFill(Color.DARKBLUE);
+//
+//                listPane.add(gamesList, 0, 0);
+//                listPane.add(goBack, 0, 1);
+//
+//                EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
+//                    public  void handle(ActionEvent e)
+//                    {
+//                        primaryStage.setScene( primaryScene );
+//                    }
+//                };
+//                goBack.setOnAction(eventGoBack);
+//
+//                Scene continueGameScene = new Scene(listPane, 360, 640);
+//                primaryStage.setScene(continueGameScene);
+                savedGamesList();
             }
         };
         btn2.setOnAction(eventBtn2);

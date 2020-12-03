@@ -13,6 +13,7 @@ public class ColorChangerObstacle implements Serializable {
     private transient Group group;
     private final int radius=15;
     private SerializableColor colors[];
+    private double y=0;
     ColorChangerObstacle(SerializableColor[] colors){
         this.colors=colors;
         display();
@@ -34,8 +35,15 @@ public class ColorChangerObstacle implements Serializable {
             arcs[i].setType(ArcType.ROUND);
             group.getChildren().add(arcs[i]);
         }
+        group.setTranslateY(y);
     }
     public Group getGroup(){
         return group;
+    }
+    public void serialise(){
+        y=group.getTranslateY();
+    }
+    public void deserialise(){
+        display();
     }
 }

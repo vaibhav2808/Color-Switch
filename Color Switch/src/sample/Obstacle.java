@@ -18,6 +18,7 @@ public abstract class Obstacle implements Serializable {
     private transient RotateTransition transition;
     private ColorChangerObstacle colorSwitcher;
     private double translateY=0.0;
+    private double duration=0.0;
     public Obstacle(SerializableColor colors[]){
         this.colors=colors;
         group=new Group();
@@ -41,7 +42,7 @@ public abstract class Obstacle implements Serializable {
     public boolean collisionWithDiffColor(Ball ball) {
         List<Node> list=getGroup().getChildren();
         for(Node n:list){
-            if(Shape.intersect((Shape)n,ball).getBoundsInLocal().getWidth()>0&&!(((Shape) n).getStroke().equals(ball.getFill()))){
+            if(Shape.intersect((Shape)n,ball.get()).getBoundsInLocal().getWidth()>0&&!(((Shape) n).getStroke().equals(ball.get().getFill()))){
                 return true;
             }
         }
@@ -49,6 +50,7 @@ public abstract class Obstacle implements Serializable {
     }
 
     public void createTransition(double duration){
+        this.duration=duration;
         transition= new RotateTransition(Duration.seconds(duration),group);
         transition.setInterpolator(Interpolator.LINEAR);
         transition.setByAngle(360);
@@ -61,11 +63,15 @@ public abstract class Obstacle implements Serializable {
 
     public void serialise(){
         this.translateY=group.getTranslateY();
+        colorSwitcher.serialise();
     }
 
     public void deserialise(){
+        group=new Group();
         display();
+        createTransition(duration);
         group.setTranslateY(translateY);
+        colorSwitcher.deserialise();
         colorSwitcher.display();
     }
 

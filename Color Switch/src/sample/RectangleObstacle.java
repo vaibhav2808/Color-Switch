@@ -35,7 +35,7 @@ public class RectangleObstacle extends Obstacle{
     public boolean collisionWithDiffColor(Ball ball) {
         List<Node> list=getGroup().getChildren();
         for(Node n:list){
-            if(Shape.intersect((Shape)n,ball).getBoundsInLocal().getWidth()>0&&!(((Shape) n).getFill().equals(ball.getFill()))){
+            if(Shape.intersect((Shape)n,ball.get()).getBoundsInLocal().getWidth()>0&&!(((Shape) n).getFill().equals(ball.get().getFill()))){
                 return true;
             }
         }

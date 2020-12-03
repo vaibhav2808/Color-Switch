@@ -44,7 +44,7 @@ public class Game extends AnimationTimer implements Serializable {
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
         ball=new Ball();
-        ball.setFill(arr[0].getFXColor());
+        ball.get().setFill(arr[0].getFXColor());
         player=new Player(ball);
         allObstacles=new ArrayList<>(100);
         obstaclesOnScreen=new ArrayList<>();
@@ -66,10 +66,10 @@ public class Game extends AnimationTimer implements Serializable {
             colorSwitcher[i]=allObstacles.get(i).getColorSwitcher();
             colorSwitcher[i].getGroup().setTranslateY(obstacleRenderedPosition+250);
             stars[i]=new Star();
-            stars[i].setTranslateY(obstacleRenderedPosition);
+            stars[i].get().setTranslateY(obstacleRenderedPosition);
             allObstacles.get(i).getGroup().setTranslateY(obstacleRenderedPosition);
             gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),allObstacles.get(i).getGroup());
-            gamePlayRoot.getChildren().add(stars[i]);
+            gamePlayRoot.getChildren().add(stars[i].get());
             obstaclesOnScreen.add(allObstacles.get(i));
 
             obstacleRenderedPosition-=DistancebetweenObstacles;
@@ -77,35 +77,27 @@ public class Game extends AnimationTimer implements Serializable {
             allObstacles.get(i).startTransition();
         }
         colorSwitcher[0].getGroup().setTranslateY(2000);
-        gamePlayRoot.getChildren().add(ball);
-        gameScene.setOnKeyPressed(e->{
-            if(e.getCode()== KeyCode.SPACE){
-                player.jump();
-            }
-            else if(e.getCode()==KeyCode.ESCAPE){
-                pauseGame(primaryStage);
-            }
-        });
+        gamePlayRoot.getChildren().add(ball.get());
     }
 
     @Override
     public void handle(long l) {
-        ball.setTranslateY(ball.getTranslateY()+1);
+        ball.get().setTranslateY(ball.get().getTranslateY()+1);
 
         //collision with color switcher
         for(int i=0;i<maxNumofObstaclesrendered;i++){
             //colorswitch collision
-            if(colorSwitcher[i].getGroup().getBoundsInParent().intersects(ball.getBoundsInParent())){
+            if(colorSwitcher[i].getGroup().getBoundsInParent().intersects(ball.get().getBoundsInParent())){
 //                System.out.println("collides");
                 colorSwitcher[i].getGroup().setDisable(true);
                 colorSwitcher[i].getGroup().setTranslateY(2000);
                 ball.changeColor(new SerializableColor(colorSwitcher[i].getRandomColor()));
                 renderNextObstacle();
             }
-            if(ball.getBoundsInParent().intersects(stars[i].getBoundsInParent())){
+            if(ball.get().getBoundsInParent().intersects(stars[i].get().getBoundsInParent())){
                 //add code for increasing stars
-                stars[i].setVisible(false);
-                stars[i].setTranslateY(2000);
+                stars[i].get().setVisible(false);
+                stars[i].get().setTranslateY(2000);
                 player.collectStar();
             }
         }
@@ -117,18 +109,18 @@ public class Game extends AnimationTimer implements Serializable {
             }
         }
 
-        if(ball.getTranslateY()<-50) {
+        if(ball.get().getTranslateY()<-50) {
             for(Obstacle o:obstaclesOnScreen){
                 o.getGroup().setTranslateY(o.getGroup().getTranslateY()+5);
             }
             for(int i=0;i<maxNumofObstaclesrendered;i++){
                 colorSwitcher[i].getGroup().setTranslateY(colorSwitcher[i].getGroup().getTranslateY()+5);
-                stars[i].setTranslateY(stars[i].getTranslateY()+5);
+                stars[i].get().setTranslateY(stars[i].get().getTranslateY()+5);
             }
-            ball.setTranslateY(ball.getTranslateY()+5);
+            ball.get().setTranslateY(ball.get().getTranslateY()+5);
         }
         //ball out of screen
-        if(ball.getTranslateY()>320){
+        if(ball.get().getTranslateY()>320){
             //code for gameover
             gameOver();
         }
@@ -147,6 +139,14 @@ public class Game extends AnimationTimer implements Serializable {
     }
 
     public void  play(Stage thestage){
+        gameScene.setOnKeyPressed(e->{
+            if(e.getCode()== KeyCode.SPACE){
+                player.jump();
+            }
+            else if(e.getCode()==KeyCode.ESCAPE){
+                pauseGame(thestage);
+            }
+        });
         thestage.setScene(gameScene);
         this.start();
     }
@@ -185,7 +185,9 @@ public class Game extends AnimationTimer implements Serializable {
         int diff=0;
         for(int i=0;i<10;i++) {
             allObstacles.add(new CircleObstacle(arr, 100));
-            allObstacles.add(new PlusObstacle(200, arr));
+            PlusObstacle plusObstacle=new PlusObstacle(200,arr);
+            plusObstacle.getGroup().setTranslateX(-50);
+            allObstacles.add(plusObstacle);
             allObstacles.add(new TriangleObstacle(200, arr));
             allObstacles.add(new DiamondObstacle(200, 120, arr));
             allObstacles.add(new RectangleObstacle(200, 200, arr));
@@ -322,8 +324,8 @@ public class Game extends AnimationTimer implements Serializable {
         int id=lastObstacleId%maxNumofObstaclesrendered;
         colorSwitcher[id]=obstacle.getColorSwitcher();
         colorSwitcher[id].getGroup().setTranslateY(obstacleY-200);
-        stars[id].setTranslateY(obstacleY);
-        stars[id].setVisible(true);
+        stars[id].get().setTranslateY(obstacleY);
+        stars[id].get().setVisible(true);
         lastObstacleId++;
 
         obstaclesOnScreen.add(obstacle);
@@ -334,15 +336,22 @@ public class Game extends AnimationTimer implements Serializable {
         for(Obstacle o:obstaclesOnScreen){
             gamePlayRoot.getChildren().add(o.getGroup());
         }
-        gamePlayRoot.getChildren().add(ball);
+        gamePlayRoot.getChildren().add(ball.get());
         for(int i=0;i<maxNumofObstaclesrendered;i++){
-            gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),stars[i]);
+            gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),stars[i].get());
         }
     }
 
     public void deserialise(Stage theStage){
+        ball.deserialise();
         for(Obstacle o:allObstacles){
             o.deserialise();
+        }
+        for(Obstacle o:obstaclesOnScreen){
+            o.startTransition();
+        }
+        for(Star s:stars){
+            s.deserialise();
         }
         try {
             createPauseScene(theStage);
@@ -357,23 +366,20 @@ public class Game extends AnimationTimer implements Serializable {
             gamePlayRoot.getChildren().add(o.getGroup());
         }
         for(int i=0;i<maxNumofObstaclesrendered;i++){
-            gamePlayRoot.getChildren().addAll(stars[i],colorSwitcher[i].getGroup());
+            gamePlayRoot.getChildren().addAll(stars[i].get(),colorSwitcher[i].getGroup());
         }
+        gamePlayRoot.getChildren().add(ball.get());
 
         gameScene=new Scene(gamePlayRoot,360,640,Color.BLACK);
-        gameScene.setOnKeyPressed(e->{
-            if(e.getCode()== KeyCode.SPACE){
-                player.jump();
-            }
-            else if(e.getCode()==KeyCode.ESCAPE){
-                pauseGame(theStage);
-            }
-        });
     }
 
     public void serialise(){
         for(Obstacle o:obstaclesOnScreen){
             o.serialise();
         }
+        for(Star s:stars){
+            s.serialise();
+        }
+        ball.serialise();
     }
 }
