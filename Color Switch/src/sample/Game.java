@@ -186,7 +186,6 @@ public class Game extends AnimationTimer implements Serializable {
         for(int i=0;i<10;i++) {
             allObstacles.add(new CircleObstacle(arr, 100));
             PlusObstacle plusObstacle=new PlusObstacle(200,arr);
-            plusObstacle.getGroup().setTranslateX(-50);
             allObstacles.add(plusObstacle);
             allObstacles.add(new TriangleObstacle(200, arr));
             allObstacles.add(new DiamondObstacle(200, 120, arr));

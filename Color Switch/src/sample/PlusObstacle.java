@@ -41,6 +41,7 @@ public class PlusObstacle extends Obstacle{
 
         group.getChildren().addAll(l1,l2,l3,l4);
         group.setTranslateY(getY());
+        group.setTranslateX(-60);
     }
     public void setLength(double l){
         this.length = l;

@@ -19,6 +19,7 @@ public abstract class Obstacle implements Serializable {
     private ColorChangerObstacle colorSwitcher;
     private double translateY=0.0;
     private double duration=0.0;
+    private double rotate=0.0;
     public Obstacle(SerializableColor colors[]){
         this.colors=colors;
         group=new Group();
@@ -64,6 +65,7 @@ public abstract class Obstacle implements Serializable {
     public void serialise(){
         this.translateY=group.getTranslateY();
         colorSwitcher.serialise();
+        rotate=group.getRotate();
     }
 
     public void deserialise(){
@@ -71,6 +73,7 @@ public abstract class Obstacle implements Serializable {
         display();
         createTransition(duration);
         group.setTranslateY(translateY);
+        group.setRotate(rotate);
         colorSwitcher.deserialise();
         colorSwitcher.display();
     }
