@@ -33,4 +33,7 @@ public class Player implements Serializable {
     public void jump(){
         ball.get().setTranslateY(ball.get().getTranslateY()- 50);
     }
+    public int getScoreForresurrection(){
+        return scoreForresurrection;
+    }
 }

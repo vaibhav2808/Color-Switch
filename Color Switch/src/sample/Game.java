@@ -40,10 +40,15 @@ public class Game extends AnimationTimer implements Serializable {
     private transient Scene gameScene,pauseScene;
     private transient StackPane gamePlayRoot;
     private int lastObstacleId=maxNumofObstaclesrendered;
+    private Label scoreLabel;
     private Star[] stars=new Star[maxNumofObstaclesrendered];
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
         ball=new Ball();
+        scoreLabel=new Label();
+        scoreLabel.setTextFill(Color.WHITE);
+        scoreLabel.setTranslateX(150);
+        scoreLabel.setTranslateY(-300);
         ball.get().setFill(arr[0].getFXColor());
         player=new Player(ball);
         allObstacles=new ArrayList<>(100);
@@ -77,11 +82,13 @@ public class Game extends AnimationTimer implements Serializable {
             allObstacles.get(i).startTransition();
         }
         colorSwitcher[0].getGroup().setTranslateY(2000);
-        gamePlayRoot.getChildren().add(ball.get());
+        gamePlayRoot.getChildren().addAll(ball.get(),scoreLabel);
     }
 
     @Override
     public void handle(long l) {
+        //update scpre on screem
+        scoreLabel.setText("Score "+player.getScore());
         ball.get().setTranslateY(ball.get().getTranslateY()+1);
 
         //collision with color switcher
@@ -176,8 +183,9 @@ public class Game extends AnimationTimer implements Serializable {
         manager.displayMainMenu();
     }
 
-    public void continueGame(){
-
+    public void continueGame(Stage theStage){
+        player.setScore(player.getScore()-player.getScoreForresurrection());
+        resumeGame(theStage);
     }
 
     private void createObstacles(){
@@ -335,13 +343,15 @@ public class Game extends AnimationTimer implements Serializable {
         for(Obstacle o:obstaclesOnScreen){
             gamePlayRoot.getChildren().add(o.getGroup());
         }
-        gamePlayRoot.getChildren().add(ball.get());
+        gamePlayRoot.getChildren().addAll(ball.get(),scoreLabel);
         for(int i=0;i<maxNumofObstaclesrendered;i++){
             gamePlayRoot.getChildren().addAll(colorSwitcher[i].getGroup(),stars[i].get());
         }
     }
 
     public void deserialise(Stage theStage){
+        scoreLabel=new Label("Score "+player.getScore());
+        scoreLabel.setTextFill(Color.WHITE);
         ball.deserialise();
         for(Obstacle o:allObstacles){
             o.deserialise();
@@ -367,7 +377,7 @@ public class Game extends AnimationTimer implements Serializable {
         for(int i=0;i<maxNumofObstaclesrendered;i++){
             gamePlayRoot.getChildren().addAll(stars[i].get(),colorSwitcher[i].getGroup());
         }
-        gamePlayRoot.getChildren().add(ball.get());
+        gamePlayRoot.getChildren().addAll(ball.get(),scoreLabel);
 
         gameScene=new Scene(gamePlayRoot,360,640,Color.BLACK);
     }
