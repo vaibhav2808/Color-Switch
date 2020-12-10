@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -110,7 +111,13 @@ public class GameManager implements Serializable {
     public void saveGame(){
         //should store path
         game.serialise();
-        String path="../savedGames/saveGame.txt";
+        TextInputDialog textInputDialog=new TextInputDialog();
+        textInputDialog.setHeaderText(null);
+        textInputDialog.setContentText("Enter name for saved file");
+        textInputDialog.showAndWait();
+        String path="../savedGames/"+textInputDialog.getEditor().getText();
+        if(path.equals("../savedGames/"))
+            return;
         ObjectOutputStream out;
         try{
             out=new ObjectOutputStream(new FileOutputStream(path));
