@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends AnimationTimer implements Serializable {
+    private int jumpFrame=0;
     private final int maxNumofObstaclesrendered=5;
     private final int DistancebetweenObstacles=450;
     private long obstacleRenderedPosition;
@@ -90,9 +91,13 @@ public class Game extends AnimationTimer implements Serializable {
 
     @Override
     public void handle(long l) {
+        if(jumpFrame>0){
+            jumpFrame--;
+            player.jump();
+        }
         //update scpre on screem
         scoreLabel.setText("Score "+player.getScore());
-        ball.get().setTranslateY(ball.get().getTranslateY()+1);
+        ball.get().setTranslateY(ball.get().getTranslateY()+0.8);
 
         //collision with color switcher
         for(int i=0;i<maxNumofObstaclesrendered;i++){
@@ -151,7 +156,7 @@ public class Game extends AnimationTimer implements Serializable {
     public void  play(Stage thestage){
         gameScene.setOnKeyPressed(e->{
             if(e.getCode()== KeyCode.SPACE){
-                player.jump();
+                jumpFrame+=13;
             }
             else if(e.getCode()==KeyCode.ESCAPE){
                 pauseGame(thestage);
