@@ -62,6 +62,10 @@ public abstract class Obstacle implements Serializable {
         transition.play();
     }
 
+    public void stopTransition(){
+        transition.stop();
+    }
+
     public void serialise(){
         this.translateY=group.getTranslateY();
         colorSwitcher.serialise();

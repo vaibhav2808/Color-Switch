@@ -215,4 +215,8 @@ public class GameManager implements Serializable {
         btn3.setOnAction(eventBtn3);
         mainMenuScene=primaryScene;
     }
+
+    public Stage getTheStage(){
+        return theStage;
+    }
 }

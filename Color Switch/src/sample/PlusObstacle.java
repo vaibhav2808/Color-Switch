@@ -1,15 +1,8 @@
 package sample;
 
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
-
-import java.util.List;
 
 public class PlusObstacle extends Obstacle{
     private double length;
@@ -49,4 +42,6 @@ public class PlusObstacle extends Obstacle{
     public double getLength(){
         return length;
     }
+
+
 }
