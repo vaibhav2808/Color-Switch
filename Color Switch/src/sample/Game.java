@@ -43,17 +43,14 @@ public class Game extends AnimationTimer implements Serializable {
     private transient Scene gameScene,pauseScene,gameOverScene;
     private transient StackPane gamePlayRoot;
     private int lastObstacleId=maxNumofObstaclesrendered;
-    private Label scoreLabel;
+    private transient Label scoreLabel;
     private Star[] stars=new Star[maxNumofObstaclesrendered];
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
         ball=new Ball();
-        scoreLabel=new Label();
-        scoreLabel.setTextFill(Color.WHITE);
-        scoreLabel.setTranslateX(150);
-        scoreLabel.setTranslateY(-300);
         ball.get().setFill(arr[0].getFXColor());
         player=new Player(ball);
+        createScoreLabel();
         allObstacles=new ArrayList<>(100);
         obstaclesOnScreen=new ArrayList<>();
         gamePlayRoot=new StackPane();
@@ -199,7 +196,7 @@ public class Game extends AnimationTimer implements Serializable {
 
     public void continueGame(Stage theStage){
         if(player.canResurrect()) {
-            ball.get().setTranslateY(ball.get().getTranslateY() + 180);
+            ball.get().setTranslateY(ball.get().getTranslateY() + 120);
             player.setScore(player.getScore() - player.getScoreForresurrection());
             resumeGame(theStage);
             return;
@@ -382,8 +379,6 @@ public class Game extends AnimationTimer implements Serializable {
     }
 
     public void deserialise(Stage theStage){
-        scoreLabel=new Label("Score "+player.getScore());
-        scoreLabel.setTextFill(Color.WHITE);
         ball.deserialise();
         for(Obstacle o:allObstacles){
             o.deserialise();
@@ -395,6 +390,7 @@ public class Game extends AnimationTimer implements Serializable {
             s.deserialise();
         }
         try {
+            createScoreLabel();
             createPauseScene(theStage);
             createGameOverScene(theStage);
         } catch (FileNotFoundException e) {
@@ -514,5 +510,12 @@ public class Game extends AnimationTimer implements Serializable {
             }
         };
         btn3.setOnAction(eventBtn3);
+    }
+
+    private void createScoreLabel(){
+        scoreLabel=new Label("Score "+player.getScore());
+        scoreLabel.setTextFill(Color.WHITE);
+        scoreLabel.setTranslateX(150);
+        scoreLabel.setTranslateY(-300);
     }
 }

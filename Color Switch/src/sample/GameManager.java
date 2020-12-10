@@ -54,17 +54,41 @@ public class GameManager implements Serializable {
         playGame(theStage);
     }
 
-    public void savedGamesList(){
-        FileChooser fileChooser=new FileChooser();
-        Button button = new Button("Select File");
-        button.setOnAction(e -> {
-            File selectedFile = fileChooser.showOpenDialog(theStage);
-            continuePreviousGame(selectedFile.getAbsolutePath());
+    public void savedGamesList() {
+        GridPane listPane = new GridPane();
+        ListView<String> gamesList = new ListView<>();
+        gamesList.setPrefWidth(360);
+        gamesList.setPrefHeight(600);
+        gamesList.setStyle("-fx-font-size:20");
+        File[] saved = new File("../savedGames").listFiles();
+        if (saved != null)
+            for (File f : saved) {
+                gamesList.getItems().add(f.getName());
+            }
+
+        Button goBack = new Button("Back to Main Menu");
+        goBack.setAlignment(Pos.CENTER);
+        goBack.setPrefSize(360, 10);
+        goBack.setStyle("-fx-font-size:20");
+        goBack.setTextFill(Color.DARKBLUE);
+
+        gamesList.setOnMouseClicked(e -> {
+            String path = gamesList.getSelectionModel().getSelectedItem();
+            continuePreviousGame("../savedGames/" + path);
         });
 
-        VBox vBox = new VBox(button);
-        Scene scene = new Scene(vBox, 360, 640);
-        theStage.setScene(scene);
+        listPane.add(gamesList, 0, 0);
+        listPane.add(goBack, 0, 1);
+
+        EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                theStage.setScene(mainMenuScene);
+            }
+        };
+        goBack.setOnAction(eventGoBack);
+
+        Scene continueGameScene = new Scene(listPane, 360, 640);
+        theStage.setScene(continueGameScene);
     }
 
     public void continuePreviousGame(String path){
@@ -84,14 +108,9 @@ public class GameManager implements Serializable {
     }
 
     public void saveGame(){
-//        DirectoryChooser directoryChooser=new DirectoryChooser();
-//        Button button =new Button("Select save location");
-//        button.setOnAction(e->{
-//            File file=directoryChooser.showDialog(theStage);
-//        });
         //should store path
         game.serialise();
-        String path="savedgame1.txt";
+        String path="../savedGames/saveGame.txt";
         ObjectOutputStream out;
         try{
             out=new ObjectOutputStream(new FileOutputStream(path));
@@ -174,34 +193,6 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventBtn2 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
-//                GridPane listPane = new GridPane();
-//                ListView gamesList = new ListView();
-//                gamesList.setPrefWidth(360);
-//                gamesList.setPrefHeight(600);
-//                gamesList.setStyle("-fx-font-size:20");
-//                gamesList.getItems().add("Savestate 1");
-//                gamesList.getItems().add("Savestate 2");
-//                gamesList.getItems().add("Savestate 3");
-//
-//                Button goBack = new Button("Back to Main Menu");
-//                goBack.setAlignment(Pos.CENTER);
-//                goBack.setPrefSize(360, 10);
-//                goBack.setStyle("-fx-font-size:20");
-//                goBack.setTextFill(Color.DARKBLUE);
-//
-//                listPane.add(gamesList, 0, 0);
-//                listPane.add(goBack, 0, 1);
-//
-//                EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
-//                    public  void handle(ActionEvent e)
-//                    {
-//                  scoreLabel.setTextFill(Color.WHITE);      primaryStage.setScene( primaryScene );
-//                    }
-//                };
-//                goBack.setOnAction(eventGoBack);
-//
-//                Scene continueGameScene = new Scene(listPane, 360, 640);
-//                primaryStage.setScene(continueGameScene);
                 savedGamesList();
             }
         };
