@@ -35,6 +35,7 @@ public class GameManager implements Serializable {
         this.game = g;
     }
     public void setHighScore(int h){
+        if(h>highScore)
         this.highScore = h;
     }
     public Game getGame(){
@@ -67,7 +68,7 @@ public class GameManager implements Serializable {
     }
 
     public void continuePreviousGame(String path){
-        ObjectInputStream in=null;
+        ObjectInputStream in;
         try{
             in=new ObjectInputStream(new FileInputStream(path));
             GameManager newmanager=(GameManager)in.readObject();
@@ -91,7 +92,7 @@ public class GameManager implements Serializable {
         //should store path
         game.serialise();
         String path="savedgame1.txt";
-        ObjectOutputStream out=null;
+        ObjectOutputStream out;
         try{
             out=new ObjectOutputStream(new FileOutputStream(path));
             out.writeObject(this);
@@ -194,7 +195,7 @@ public class GameManager implements Serializable {
 //                EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
 //                    public  void handle(ActionEvent e)
 //                    {
-//                        primaryStage.setScene( primaryScene );
+//                  scoreLabel.setTextFill(Color.WHITE);      primaryStage.setScene( primaryScene );
 //                    }
 //                };
 //                goBack.setOnAction(eventGoBack);

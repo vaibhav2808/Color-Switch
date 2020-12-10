@@ -317,6 +317,7 @@ public class Game extends AnimationTimer implements Serializable {
     private void gameOver(){
 //        manager.displayMainMenu();
         System.out.println("Game over");
+        manager.setHighScore(player.getScore());
     }
 
     private void renderNextObstacle(){
