@@ -4,11 +4,12 @@ import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import java.util.Arrays;
 
 public class TriangleObstacle extends Obstacle{
     private double side;
     public TriangleObstacle(double side, SerializableColor color[]){
-        super(color);
+        super(Arrays.copyOf(color,3));
         this.side=side;
         display();
     }
