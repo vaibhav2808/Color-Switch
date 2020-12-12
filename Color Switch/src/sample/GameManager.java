@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -115,6 +116,13 @@ public class GameManager implements Serializable {
         textInputDialog.setHeaderText(null);
         textInputDialog.setContentText("Enter name for saved file");
         textInputDialog.showAndWait();
+        textInputDialog.setResizable(true);
+        textInputDialog.setOnShown(e->{
+            Platform.runLater(()->{
+                textInputDialog.getDialogPane().getScene().getWindow().sizeToScene();
+                textInputDialog.setResizable(false);
+            });
+        });
         String path="../savedGames/"+textInputDialog.getEditor().getText();
         if(path.equals("../savedGames/"))
             return;

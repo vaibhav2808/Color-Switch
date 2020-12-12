@@ -2,6 +2,7 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -207,6 +208,13 @@ public class Game extends AnimationTimer implements Serializable {
         Alert alert=new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Continue Game");
         alert.setHeaderText(null);
+        alert.setResizable(true);
+        alert.setOnShown(e->{
+            Platform.runLater(()->{
+                alert.getDialogPane().getScene().getWindow().sizeToScene();
+                alert.setResizable(false);
+            });
+        });
         alert.setContentText("Not enough stars ");
         alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
