@@ -45,6 +45,7 @@ public class Game extends AnimationTimer implements Serializable {
     private int lastObstacleId=maxNumofObstaclesrendered;
     private transient Label scoreLabel;
     private Star[] stars=new Star[maxNumofObstaclesrendered];
+    private double positionCollided=0;
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
         ball=new Ball();
@@ -117,6 +118,7 @@ public class Game extends AnimationTimer implements Serializable {
         //obstacle collision
         for(Obstacle o:obstaclesOnScreen){
             if(o.collisionWithDiffColor(ball)){
+                positionCollided=o.getGroup().getTranslateY();
                 gameOver();
             }
         }
@@ -134,6 +136,7 @@ public class Game extends AnimationTimer implements Serializable {
         //ball out of screen
         if(ball.get().getTranslateY()>320){
             //code for gameover
+            positionCollided=90;
             gameOver();
         }
 
@@ -196,7 +199,7 @@ public class Game extends AnimationTimer implements Serializable {
 
     public void continueGame(Stage theStage){
         if(player.canResurrect()) {
-            ball.get().setTranslateY(ball.get().getTranslateY() + 120);
+            ball.get().setTranslateY(positionCollided+160);
             player.setScore(player.getScore() - player.getScoreForresurrection());
             resumeGame(theStage);
             return;
