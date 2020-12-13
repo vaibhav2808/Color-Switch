@@ -13,7 +13,7 @@ public class Star implements Serializable{
         display();
     }
     public void display(){
-        Image image=new Image("file:src/assets/Star.png");
+        Image image=new Image("file:./src/assets/Star.png");
         star=new ImageView(image);
         star.setFitHeight(50);
         star.setFitWidth(50);

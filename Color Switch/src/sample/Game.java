@@ -1,12 +1,9 @@
 package sample;
 import javafx.animation.AnimationTimer;
-import javafx.animation.Interpolator;
-import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -19,16 +16,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Game extends AnimationTimer implements Serializable {
     private int jumpFrame=0;
@@ -190,6 +182,10 @@ public class Game extends AnimationTimer implements Serializable {
     }
 
     public void restartGame(){
+        this.stop();
+        for(Obstacle o:obstaclesOnScreen){
+            o.stopTransition();
+        }
         manager.startNewGame();
     }
 
@@ -255,13 +251,13 @@ public class Game extends AnimationTimer implements Serializable {
         FlowPane flow1 = new FlowPane();
         flow1.setAlignment(Pos.CENTER);
         flow1.setHgap(5);
-        Label label1 = new Label("Player: ");
-        label1.setStyle("-fx-font-size:20");
-        label1.setTextFill(Color.WHITE);
-        Label label2 = new Label("<player_name>");
-        label2.setStyle("-fx-font-size:20");
-        label2.setTextFill(Color.WHITE);
-        flow1.getChildren().addAll(label1, label2);
+//        Label label1 = new Label("Player: ");
+//        label1.setStyle("-fx-font-size:20");
+//        label1.setTextFill(Color.WHITE);
+//        Label label2 = new Label("<player_name>");
+//        label2.setStyle("-fx-font-size:20");
+//        label2.setTextFill(Color.WHITE);
+//        flow1.getChildren().addAll(label1, label2);
 
         FlowPane flow2 = new FlowPane();
         flow2.setAlignment(Pos.CENTER);
@@ -270,13 +266,13 @@ public class Game extends AnimationTimer implements Serializable {
         ImageView imageViewStar = new ImageView(star);
         imageViewStar.setPreserveRatio(true);
         imageViewStar.setFitHeight(25);
-        Label label3 = new Label("Stars: ", imageViewStar);
-        label3.setStyle("-fx-font-size:20");
-        label3.setTextFill(Color.WHITE);
-        Label label4 = new Label("<star_count>");
-        label4.setStyle("-fx-font-size:20");
-        label4.setTextFill(Color.WHITE);
-        flow2.getChildren().addAll(label3, label4);
+//        Label label3 = new Label("Stars: ", imageViewStar);
+//        label3.setStyle("-fx-font-size:20");
+//        label3.setTextFill(Color.WHITE);
+//        Label label4 = new Label("<star_count>");
+//        label4.setStyle("-fx-font-size:20");
+//        label4.setTextFill(Color.WHITE);
+//        flow2.getChildren().addAll(label3, label4);
 
         GridPane paneLvl2a = new GridPane();
         paneLvl2a.setAlignment(Pos.CENTER);
@@ -363,6 +359,7 @@ public class Game extends AnimationTimer implements Serializable {
         if(obstaclesOnScreen.get(0).getGroup().getTranslateY()>400){
             obstaclesOnScreen.remove(0);
         }
+        lastObstacleId=lastObstacleId%50;
         Obstacle obstacle=allObstacles.get(lastObstacleId);
         double obstacleY=obstaclesOnScreen.get(obstaclesOnScreen.size()-1).getGroup().getTranslateY();
         obstacle.getGroup().setTranslateY(obstacleY-450);
