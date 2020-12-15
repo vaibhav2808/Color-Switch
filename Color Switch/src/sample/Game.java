@@ -11,10 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
@@ -251,6 +248,12 @@ public class Game extends AnimationTimer implements Serializable {
         FlowPane flow1 = new FlowPane();
         flow1.setAlignment(Pos.CENTER);
         flow1.setHgap(5);
+
+        Label title = new Label(" PAUSED ");
+        title.setAlignment(Pos.CENTER);
+        title.setStyle("-fx-font-size:50; -fx-border-color: white");
+        title.setTextFill(Color.WHITE);
+        flow1.getChildren().add(title);
 //        Label label1 = new Label("Player: ");
 //        label1.setStyle("-fx-font-size:20");
 //        label1.setTextFill(Color.WHITE);
@@ -441,13 +444,19 @@ public class Game extends AnimationTimer implements Serializable {
         FlowPane flow1 = new FlowPane();
         flow1.setAlignment(Pos.CENTER);
         flow1.setHgap(5);
-        Label label1 = new Label("Player: ");
-        label1.setStyle("-fx-font-size:20");
-        label1.setTextFill(Color.WHITE);
-        Label label2 = new Label("<player_name>");
-        label2.setStyle("-fx-font-size:20");
-        label2.setTextFill(Color.WHITE);
-        flow1.getChildren().addAll(label1, label2);
+
+        Label title = new Label(" GAME OVER ");
+        title.setAlignment(Pos.CENTER);
+        title.setStyle("-fx-font-size:50; -fx-border-color: white");
+        title.setTextFill(Color.WHITE);
+        flow1.getChildren().add(title);
+//        Label label1 = new Label("Player: ");
+//        label1.setStyle("-fx-font-size:20");
+//        label1.setTextFill(Color.WHITE);
+//        Label label2 = new Label("<player_name>");
+//        label2.setStyle("-fx-font-size:20");
+//        label2.setTextFill(Color.WHITE);
+//        flow1.getChildren().addAll(label1, label2);
 
         FlowPane flow2 = new FlowPane();
         flow2.setAlignment(Pos.CENTER);
