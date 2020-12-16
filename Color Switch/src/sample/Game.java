@@ -170,6 +170,11 @@ public class Game extends AnimationTimer implements Serializable {
     }
 
     public void pauseGame(Stage thestage){
+        try {
+            createPauseScene(thestage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         this.stop();
         for(Obstacle o:obstaclesOnScreen){
             o.stopTransition();
@@ -269,13 +274,13 @@ public class Game extends AnimationTimer implements Serializable {
         ImageView imageViewStar = new ImageView(star);
         imageViewStar.setPreserveRatio(true);
         imageViewStar.setFitHeight(25);
-//        Label label3 = new Label("Stars: ", imageViewStar);
-//        label3.setStyle("-fx-font-size:20");
-//        label3.setTextFill(Color.WHITE);
-//        Label label4 = new Label("<star_count>");
-//        label4.setStyle("-fx-font-size:20");
-//        label4.setTextFill(Color.WHITE);
-//        flow2.getChildren().addAll(label3, label4);
+        Label label3 = new Label("Stars: ", imageViewStar);
+        label3.setStyle("-fx-font-size:20");
+        label3.setTextFill(Color.WHITE);
+        Label label4 = new Label(player.getScore()+"");
+        label4.setStyle("-fx-font-size:20");
+        label4.setTextFill(Color.WHITE);
+        flow2.getChildren().addAll(label3, label4);
 
         GridPane paneLvl2a = new GridPane();
         paneLvl2a.setAlignment(Pos.CENTER);
@@ -350,6 +355,11 @@ public class Game extends AnimationTimer implements Serializable {
     private void gameOver(){
 //        manager.displayMainMenu();
         System.out.println("Game over");
+        try {
+            createGameOverScene(manager.getTheStage());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         this.stop();
         for(Obstacle o:obstaclesOnScreen){
             o.stopTransition();
@@ -450,13 +460,6 @@ public class Game extends AnimationTimer implements Serializable {
         title.setStyle("-fx-font-size:50; -fx-border-color: white");
         title.setTextFill(Color.WHITE);
         flow1.getChildren().add(title);
-//        Label label1 = new Label("Player: ");
-//        label1.setStyle("-fx-font-size:20");
-//        label1.setTextFill(Color.WHITE);
-//        Label label2 = new Label("<player_name>");
-//        label2.setStyle("-fx-font-size:20");
-//        label2.setTextFill(Color.WHITE);
-//        flow1.getChildren().addAll(label1, label2);
 
         FlowPane flow2 = new FlowPane();
         flow2.setAlignment(Pos.CENTER);
@@ -468,7 +471,7 @@ public class Game extends AnimationTimer implements Serializable {
         Label label3 = new Label("Stars: ", imageViewStar);
         label3.setStyle("-fx-font-size:20");
         label3.setTextFill(Color.WHITE);
-        Label label4 = new Label("<star_count>");
+        Label label4 = new Label(player.getScore()+"");
         label4.setStyle("-fx-font-size:20");
         label4.setTextFill(Color.WHITE);
         flow2.getChildren().addAll(label3, label4);

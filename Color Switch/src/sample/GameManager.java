@@ -100,6 +100,8 @@ public class GameManager implements Serializable {
             game.deserialise(theStage);
             playGame(theStage);
             in.close();
+            File file=new File(path);
+            file.delete();
         }
         catch(IOException | ClassNotFoundException e){
             e.printStackTrace();
