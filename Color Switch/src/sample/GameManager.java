@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Scanner;
 
 import static java.lang.System.exit;
 
@@ -24,7 +26,12 @@ public class GameManager implements Serializable {
     private int highScore;
     private transient Scene mainMenuScene;
     private transient final Stage theStage;
+    private Label HS;
     public GameManager(Stage primaryStage) throws FileNotFoundException {
+        Scanner in = new Scanner( new BufferedReader( new FileReader("./HighScore.txt")));
+        if(in.hasNext()){
+            highScore=in.nextInt();
+        }
         this.theStage=primaryStage;
         createMainMenuScreen(primaryStage);
         primaryStage.setScene(mainMenuScene);
@@ -36,6 +43,7 @@ public class GameManager implements Serializable {
     public void setHighScore(int h){
         if(h>highScore)
         this.highScore = h;
+        HS.setText("High Score: " + getHighScore());
     }
     public Game getGame(){
         return game;
@@ -137,6 +145,13 @@ public class GameManager implements Serializable {
     }
 
     public void exitGame(){
+        try {
+            PrintWriter out = new PrintWriter( new FileWriter("./HighScore.txt"));
+            out.println(highScore);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         exit(0);
     }
 
@@ -176,7 +191,7 @@ public class GameManager implements Serializable {
         GridPane paneLvl2c = new GridPane();
         paneLvl2c.setAlignment(Pos.CENTER);
         paneLvl2c.setVgap(10);
-        Label HS = new Label("High Score: " + getHighScore() );
+        HS = new Label("High Score: " + getHighScore() );
         HS.setAlignment(Pos.CENTER);
         HS.setTextFill(Color.WHITE);
         HS.setStyle("-fx-font-size:15");
