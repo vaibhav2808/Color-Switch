@@ -172,6 +172,16 @@ public class GameManager implements Serializable {
         imageViewLogo.setFitHeight(150);
         paneLvl2a.add(imageViewLogo, 0 ,3);
         paneLvl1.add(paneLvl2a, 0, 4);
+        
+        GridPane paneLvl2c = new GridPane();
+        paneLvl2c.setAlignment(Pos.CENTER);
+        paneLvl2c.setVgap(10);
+        Label HS = new Label("High Score: " + getHighScore() );
+        HS.setAlignment(Pos.CENTER);
+        HS.setTextFill(Color.WHITE);
+        HS.setStyle("-fx-font-size:15");
+        paneLvl2c.add(HS, 0 ,2);
+        paneLvl1.add(paneLvl2c, 0, 4);
 
         GridPane paneLvl2b = new GridPane();
         paneLvl2b.setAlignment(Pos.CENTER);
