@@ -25,7 +25,7 @@ public class Game extends AnimationTimer implements Serializable {
     private final int DistancebetweenObstacles=450;
     private long obstacleRenderedPosition;
     private volatile ColorChangerObstacle colorSwitcher[]=new ColorChangerObstacle[maxNumofObstaclesrendered];
-    private SerializableColor arr[]={new SerializableColor(Color.BLUE),new SerializableColor(Color.RED),new SerializableColor(Color.GREEN),new SerializableColor(Color.YELLOW)};
+    private SerializableColor arr[]=SerializableColor.zestyColors;
     private Ball ball;
     private Player player;
     private GameManager manager;
