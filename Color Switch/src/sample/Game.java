@@ -42,7 +42,7 @@ public class Game extends AnimationTimer implements Serializable {
         this.arr=arr;
         gameSounds=GameSounds.getInstance();
         ball=new Ball();
-        ball.get().setFill(arr[0].getFXColor());
+        ball.changeColor(arr[0]);
         player=new Player(ball);
         createScoreLabel();
         allObstacles=new ArrayList<>(100);
