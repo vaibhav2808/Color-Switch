@@ -37,8 +37,9 @@ public class Game extends AnimationTimer implements Serializable {
     private Star[] stars=new Star[maxNumofObstaclesrendered];
     private double positionCollided=0;
     private transient GameSounds gameSounds;
-    public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
+    public Game(Stage primaryStage, GameManager manager,SerializableColor arr[]) throws FileNotFoundException {
         this.manager=manager;
+        this.arr=arr;
         gameSounds=GameSounds.getInstance();
         ball=new Ball();
         ball.get().setFill(arr[0].getFXColor());
@@ -410,7 +411,10 @@ public class Game extends AnimationTimer implements Serializable {
         }
     }
 
-    public void deserialise(Stage theStage){
+    public void deserialise(Stage theStage,SerializableColor arr[]){
+        this.arr=arr;
+        //not sure if required
+        ball.get().setFill(arr[0].getFXColor());
         ball.deserialise();
         for(Obstacle o:allObstacles){
             o.deserialise();

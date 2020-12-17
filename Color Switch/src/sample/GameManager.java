@@ -1,18 +1,19 @@
 package sample;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -24,10 +25,11 @@ import static java.lang.System.exit;
 public class GameManager implements Serializable {
     private Game game;
     private int highScore;
-    private transient Scene mainMenuScene;
+    private transient Scene mainMenuScene,settingsScene;
     private transient final Stage theStage;
     private Label HS;
     private transient GameSounds gameSounds;
+    private SerializableColor[] theme=SerializableColor.defaultColors;
     public GameManager(Stage primaryStage) throws FileNotFoundException {
         Scanner in = new Scanner( new BufferedReader( new FileReader("./HighScore.txt")));
         if(in.hasNext()){
@@ -36,6 +38,7 @@ public class GameManager implements Serializable {
         gameSounds=GameSounds.getInstance();
         this.theStage=primaryStage;
         createMainMenuScreen(primaryStage);
+        createSettingsScreen(primaryStage);
         primaryStage.setScene(mainMenuScene);
     }
 
@@ -56,7 +59,7 @@ public class GameManager implements Serializable {
 
     public void startNewGame(){
         try {
-            game=new Game(theStage,this);
+            game=new Game(theStage,this,theme);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -92,7 +95,7 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 gameSounds.play(GameSounds.BUTTON_SOUND);
-                theStage.setScene(mainMenuScene);
+                displayMainMenu();
             }
         };
         goBack.setOnAction(eventGoBack);
@@ -108,7 +111,7 @@ public class GameManager implements Serializable {
             GameManager newmanager=(GameManager)in.readObject();
             this.game= newmanager.getGame();
             game.setManager(this);
-            game.deserialise(theStage);
+            game.deserialise(theStage,theme);
             playGame(theStage);
             in.close();
             File file=new File(path);
@@ -166,6 +169,10 @@ public class GameManager implements Serializable {
         theStage.setScene(mainMenuScene);
     }
 
+    public void displaySettingsMenu(){
+        theStage.setScene(settingsScene);
+    }
+
     private void createMainMenuScreen(Stage primaryStage) throws FileNotFoundException {
         StackPane root = new StackPane();
         root.setStyle("-fx-background-color: BLACK");
@@ -188,12 +195,9 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventSettingsBtn = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
-                try {
                     System.out.println("Settings");
-                    createSettingsScreen(primaryStage);
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                }
+                    gameSounds.play(GameSounds.BUTTON_SOUND);
+                    displaySettingsMenu();
             }
         };
         settingsBtn.setOnAction(eventSettingsBtn);
@@ -299,6 +303,8 @@ public class GameManager implements Serializable {
             public void handle(ActionEvent e)
             {
                 // code
+                gameSounds.play(GameSounds.BUTTON_SOUND);
+                displayMainMenu();
             }
         };
         backBtn.setOnAction(eventBackBtn);
@@ -316,12 +322,18 @@ public class GameManager implements Serializable {
         paneLvl2b.getChildren().addAll(soundLabel, soundBtn);
         paneLvl1.add(paneLvl2b, 0, 1);
 
-        if ( soundBtn.isSelected() ){
+        soundBtn.setOnAction(e->{
+            if ( soundBtn.isSelected() ){
 //            sound on
-        }
-        else{
+                gameSounds.play(GameSounds.BUTTON_SOUND);
+                GameSounds.toggle(true);
+            }
+            else{
 //            sound off
-        }
+                GameSounds.toggle(false);
+            }
+        });
+
 
         GridPane paneLvl2c = new GridPane();
         paneLvl2c.setAlignment(Pos.CENTER);
@@ -413,8 +425,26 @@ public class GameManager implements Serializable {
         rBtn2.setToggleGroup(themeGroup);
         rBtn3.setToggleGroup(themeGroup);
         rBtn4.setToggleGroup(themeGroup);
+        settingsScene=primaryScene;
 
-        mainMenuScene=primaryScene;
+        themeGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
+        {
+            public void changed(ObservableValue<? extends Toggle> ob,
+                                Toggle o, Toggle n)
+            {
+                RadioButton rb = (RadioButton)themeGroup.getSelectedToggle();
+                if (rb != null) {
+                    if(rb.equals(rBtn1))
+                        theme=SerializableColor.defaultColors;
+                    else if(rb.equals(rBtn2))
+                        theme=SerializableColor.elegantColors;
+                    else if(rb.equals(rBtn3))
+                        theme=SerializableColor.zestyColors;
+                    else
+                        theme=SerializableColor.retroColors;
+                }
+            }
+        });
     }
     
     public Stage getTheStage(){

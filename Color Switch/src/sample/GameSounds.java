@@ -62,7 +62,7 @@ public class GameSounds {
         }
     }
 
-    public static void toggle(){
-        switchedOn=!switchedOn;
+    public static void toggle(boolean bool){
+        switchedOn=bool;
     }
 }
