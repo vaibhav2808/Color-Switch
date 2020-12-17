@@ -42,13 +42,20 @@ public class GameSounds {
 
     public void play(int option){
         switch (option) {
-            case 1 -> playSound.play();
-            case 2 -> hitButton.play();
-            case 3 -> colorSwitchHit.play();
-            case 4 -> starHit.play();
-            case 5 -> gameOver.play();
-            case 6 -> error.play();
-            case 7 -> jump.play();
+            case 1: playSound.play();
+                break;
+            case 2: hitButton.play();
+                break;
+            case 3: colorSwitchHit.play();
+                break;
+            case 4: starHit.play();
+                break;
+            case 5: gameOver.play();
+                break;
+            case 6: error.play();
+                break;
+            case 7: jump.play();
+                break;
         }
     }
 }
