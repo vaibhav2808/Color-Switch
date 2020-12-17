@@ -27,7 +27,7 @@ public class GameManager implements Serializable {
     private int highScore;
     private transient Scene mainMenuScene,settingsScene;
     private transient final Stage theStage;
-    private Label HS;
+    private transient Label HS;
     private transient GameSounds gameSounds;
     private SerializableColor[] theme=SerializableColor.defaultColors;
     public GameManager(Stage primaryStage) throws FileNotFoundException {

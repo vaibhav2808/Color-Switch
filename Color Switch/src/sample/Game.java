@@ -414,7 +414,6 @@ public class Game extends AnimationTimer implements Serializable {
     public void deserialise(Stage theStage,SerializableColor arr[]){
         this.arr=arr;
         //not sure if required
-        ball.get().setFill(arr[0].getFXColor());
         ball.deserialise();
         for(Obstacle o:allObstacles){
             o.deserialise();
@@ -444,7 +443,7 @@ public class Game extends AnimationTimer implements Serializable {
             gamePlayRoot.getChildren().addAll(stars[i].get(),colorSwitcher[i].getGroup());
         }
         gamePlayRoot.getChildren().addAll(ball.get(),scoreLabel);
-
+//        ball.get().setFill(arr[0].getFXColor());
         gameScene=new Scene(gamePlayRoot,360,640,Color.BLACK);
     }
 
