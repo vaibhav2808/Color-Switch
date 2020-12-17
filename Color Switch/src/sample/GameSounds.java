@@ -15,6 +15,7 @@ public class GameSounds {
     private AudioClip error;
     private AudioClip jump;
     private static GameSounds gameSounds;
+    public static boolean switchedOn=true;
 
     public static final int PLAY_SOUND=1;
     public static final int BUTTON_SOUND=2;
@@ -41,6 +42,8 @@ public class GameSounds {
     }
 
     public void play(int option){
+        if(!switchedOn)
+            return;
         switch (option) {
             case 1: playSound.play();
                 break;
@@ -57,5 +60,9 @@ public class GameSounds {
             case 7: jump.play();
                 break;
         }
+    }
+
+    public static void toggle(){
+        switchedOn=!switchedOn;
     }
 }
