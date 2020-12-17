@@ -36,8 +36,10 @@ public class Game extends AnimationTimer implements Serializable {
     private transient Label scoreLabel;
     private Star[] stars=new Star[maxNumofObstaclesrendered];
     private double positionCollided=0;
+    private transient GameSounds gameSounds;
     public Game(Stage primaryStage, GameManager manager) throws FileNotFoundException {
         this.manager=manager;
+        gameSounds=GameSounds.getInstance();
         ball=new Ball();
         ball.get().setFill(arr[0].getFXColor());
         player=new Player(ball);
@@ -92,6 +94,7 @@ public class Game extends AnimationTimer implements Serializable {
             //colorswitch collision
             if(colorSwitcher[i].getGroup().getBoundsInParent().intersects(ball.get().getBoundsInParent())){
 //                System.out.println("collides");
+                gameSounds.play(GameSounds.COLORSWITCHER_SOUND);
                 colorSwitcher[i].getGroup().setDisable(true);
                 colorSwitcher[i].getGroup().setTranslateY(2000);
                 ball.changeColor(new SerializableColor(colorSwitcher[i].getRandomColor()));
@@ -99,6 +102,7 @@ public class Game extends AnimationTimer implements Serializable {
             }
             if(ball.get().getBoundsInParent().intersects(stars[i].get().getBoundsInParent())){
                 //add code for increasing stars
+                gameSounds.play(GameSounds.STAR_SOUND);
                 stars[i].get().setVisible(false);
                 stars[i].get().setTranslateY(2000);
                 player.collectStar();
@@ -108,6 +112,7 @@ public class Game extends AnimationTimer implements Serializable {
         //obstacle collision
         for(Obstacle o:obstaclesOnScreen){
             if(o.collisionWithDiffColor(ball)){
+                gameSounds.play(GameSounds.GAMEOVER_SOUND);
                 positionCollided=o.getGroup().getTranslateY();
                 gameOver();
             }
@@ -126,6 +131,7 @@ public class Game extends AnimationTimer implements Serializable {
         //ball out of screen
         if(ball.get().getTranslateY()>320){
             //code for gameover
+            gameSounds.play(GameSounds.GAMEOVER_SOUND);
             positionCollided=90;
             gameOver();
         }
@@ -146,6 +152,7 @@ public class Game extends AnimationTimer implements Serializable {
     public void  play(Stage thestage){
         gameScene.setOnKeyPressed(e->{
             if(e.getCode()== KeyCode.SPACE){
+                gameSounds.play(GameSounds.JUMP_SOUND);
                 jumpFrame+=13;
             }
             else if(e.getCode()==KeyCode.ESCAPE){
@@ -203,6 +210,7 @@ public class Game extends AnimationTimer implements Serializable {
             resumeGame(theStage);
             return;
         }
+        gameSounds.play(GameSounds.ERROR_SOUND);
         Alert alert=new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Continue Game");
         alert.setHeaderText(null);
@@ -323,6 +331,7 @@ public class Game extends AnimationTimer implements Serializable {
             public void handle(ActionEvent e)
             {
                 // resume game
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 resumeGame(primaryStage);
             }
         };
@@ -331,6 +340,7 @@ public class Game extends AnimationTimer implements Serializable {
             public void handle(ActionEvent e)
             {
                 // restart game
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 restartGame();
             }
         };
@@ -346,6 +356,7 @@ public class Game extends AnimationTimer implements Serializable {
             public void handle(ActionEvent e)
             {
                 //exit
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 exitToMainMenu();
             }
         };
@@ -419,6 +430,7 @@ public class Game extends AnimationTimer implements Serializable {
         }
         gamePlayRoot=new StackPane();
         gamePlayRoot.setStyle("-fx-background-color: BLACK");
+        gameSounds=GameSounds.getInstance();
 
         //adding obtscales, star on screen
         for(Obstacle o:obstaclesOnScreen){
@@ -511,6 +523,7 @@ public class Game extends AnimationTimer implements Serializable {
             public void handle(ActionEvent e)
             {
                 // resume game
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 continueGame(primaryStage);
             }
         };
@@ -519,6 +532,7 @@ public class Game extends AnimationTimer implements Serializable {
             public void handle(ActionEvent e)
             {
                 // restart game
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 restartGame();
             }
         };
@@ -526,6 +540,7 @@ public class Game extends AnimationTimer implements Serializable {
         EventHandler<ActionEvent> eventBtn3 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 exitToMainMenu();
             }
         };

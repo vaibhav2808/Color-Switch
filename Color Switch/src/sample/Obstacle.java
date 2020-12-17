@@ -39,7 +39,7 @@ public abstract class Obstacle implements Serializable {
         return colorSwitcher;
     }
 
-
+    //Iterator
     public boolean collisionWithDiffColor(Ball ball) {
         List<Node> list=getGroup().getChildren();
         for(Node n:list){
@@ -71,8 +71,8 @@ public abstract class Obstacle implements Serializable {
         colorSwitcher.serialise();
         rotate=group.getRotate();
     }
-
-    public void deserialise(){
+    //template
+    public final void deserialise(){
         group=new Group();
         display();
         createTransition(duration);

@@ -27,11 +27,13 @@ public class GameManager implements Serializable {
     private transient Scene mainMenuScene;
     private transient final Stage theStage;
     private Label HS;
+    private transient GameSounds gameSounds;
     public GameManager(Stage primaryStage) throws FileNotFoundException {
         Scanner in = new Scanner( new BufferedReader( new FileReader("./HighScore.txt")));
         if(in.hasNext()){
             highScore=in.nextInt();
         }
+        gameSounds=GameSounds.getInstance();
         this.theStage=primaryStage;
         createMainMenuScreen(primaryStage);
         primaryStage.setScene(mainMenuScene);
@@ -89,6 +91,7 @@ public class GameManager implements Serializable {
 
         EventHandler<ActionEvent> eventGoBack = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 theStage.setScene(mainMenuScene);
             }
         };
@@ -224,6 +227,7 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventBtn1 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 System.out.println("Start game");
                 startNewGame();
             }
@@ -232,6 +236,7 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventBtn2 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 savedGamesList();
             }
         };
@@ -239,6 +244,7 @@ public class GameManager implements Serializable {
         EventHandler<ActionEvent> eventBtn3 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)
             {
+                gameSounds.play(GameSounds.BUTTON_SOUND);
                 exitGame();
             }
         };
