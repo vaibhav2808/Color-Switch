@@ -175,6 +175,28 @@ public class GameManager implements Serializable {
         paneLvl1.setAlignment(Pos.CENTER);
         paneLvl1.setVgap(10);
         root.getChildren().add(paneLvl1);
+        
+        Image settingsLogo = new Image( new FileInputStream("src/assets/Settings.png") );
+        ImageView imageViewSettingsLogo = new ImageView(settingsLogo);
+        imageViewSettingsLogo.setPreserveRatio(true);
+        imageViewSettingsLogo.setFitHeight(20);
+        Button settingsBtn = new Button("", imageViewSettingsLogo);
+        settingsBtn.setAlignment(Pos.TOP_LEFT);
+        settingsBtn.setStyle("-fx-background-color: BLACK; -fx-border-color: white");
+        paneLvl1.add(settingsBtn, 0 ,0);
+        
+        EventHandler<ActionEvent> eventSettingsBtn = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                try {
+                    System.out.println("Settings");
+                    createSettingsScreen(primaryStage);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+            }
+        };
+        settingsBtn.setOnAction(eventSettingsBtn);
 
         Image gameName = new Image( new FileInputStream("src/assets/GameName.png") );
         ImageView imageViewGameName = new ImageView(gameName);
@@ -189,7 +211,7 @@ public class GameManager implements Serializable {
         imageViewLogo.setPreserveRatio(true);
         imageViewLogo.setFitHeight(150);
         paneLvl2a.add(imageViewLogo, 0 ,3);
-        paneLvl1.add(paneLvl2a, 0, 4);
+        paneLvl1.add(paneLvl2a, 0, 3);
         
         GridPane paneLvl2c = new GridPane();
         paneLvl2c.setAlignment(Pos.CENTER);
@@ -252,6 +274,149 @@ public class GameManager implements Serializable {
         mainMenuScene=primaryScene;
     }
 
+    private void createSettingsScreen(Stage primaryStage) throws FileNotFoundException {
+        StackPane root = new StackPane();
+        root.setStyle("-fx-background-color: BLACK");
+        final Scene primaryScene = new Scene(root, 360, 640);
+
+        GridPane paneLvl1 = new GridPane();
+        paneLvl1.setAlignment(Pos.CENTER);
+        paneLvl1.setVgap(70);
+        root.getChildren().add(paneLvl1);
+
+        BorderPane paneLvl2a = new BorderPane();
+        Image backLogo = new Image( new FileInputStream("src/assets/GoBack.jpg") );
+        ImageView imageViewBackLogo = new ImageView(backLogo);
+        imageViewBackLogo.setPreserveRatio(true);
+        imageViewBackLogo.setFitHeight(20);
+        Button backBtn = new Button("", imageViewBackLogo);
+        backBtn.setAlignment(Pos.TOP_LEFT);
+        backBtn.setStyle("-fx-background-color: BLACK; -fx-border-color: white");
+        paneLvl2a.setTop(backBtn);
+        paneLvl1.add(paneLvl2a, 0, 0);
+
+        EventHandler<ActionEvent> eventBackBtn = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)
+            {
+                // code
+            }
+        };
+        backBtn.setOnAction(eventBackBtn);
+
+        TilePane paneLvl2b = new TilePane();
+        paneLvl2b.setAlignment(Pos.CENTER);
+        Label soundLabel = new Label("Sound: ");
+        soundLabel.setStyle("-fx-font-size:20");
+        soundLabel.setTextFill(Color.WHITE);
+        Image soundLogo = new Image( new FileInputStream("src/assets/SoundBlack.png") );
+        ImageView imageViewSoundLogo = new ImageView(soundLogo);
+        imageViewSoundLogo.setPreserveRatio(true);
+        imageViewSoundLogo.setFitHeight(40);
+        ToggleButton soundBtn = new ToggleButton("", imageViewSoundLogo);
+        paneLvl2b.getChildren().addAll(soundLabel, soundBtn);
+        paneLvl1.add(paneLvl2b, 0, 1);
+
+        if ( soundBtn.isSelected() ){
+//            sound on
+        }
+        else{
+//            sound off
+        }
+
+        GridPane paneLvl2c = new GridPane();
+        paneLvl2c.setAlignment(Pos.CENTER);
+        paneLvl2c.setVgap(20);
+        Label themeLabel = new Label("Theme:");
+        themeLabel.setStyle("-fx-font-size:20");
+        themeLabel.setTextFill(Color.WHITE);
+        paneLvl2c.add(themeLabel, 0, 0);
+        paneLvl1.add(paneLvl2c, 0, 2);
+
+        TilePane paneLvl3a = new TilePane();
+        paneLvl3a.setAlignment(Pos.CENTER);
+        paneLvl3a.setHgap(5);
+        RadioButton rBtn1 = new RadioButton();
+        Label a1 = new Label();
+        a1.setStyle("-fx-background-color: RED");
+        a1.setPrefSize(20, 10);
+        Label a2 = new Label();
+        a2.setStyle("-fx-background-color: BLUE");
+        a2.setPrefSize(20, 10);
+        Label a3 = new Label();
+        a3.setStyle("-fx-background-color: GREEN");
+        a3.setPrefSize(20, 10);
+        Label a4 = new Label();
+        a4.setStyle("-fx-background-color: YELLOW");
+        a4.setPrefSize(20, 10);
+        paneLvl3a.getChildren().addAll(a1, a2, a3, a4, rBtn1);
+        paneLvl2c.add(paneLvl3a, 0, 1);
+
+        TilePane paneLvl3b = new TilePane();
+        paneLvl3b.setAlignment(Pos.CENTER);
+        paneLvl3b.setHgap(5);
+        RadioButton rBtn2 = new RadioButton();
+        Label b1 = new Label();
+        b1.setStyle("-fx-background-color: #ABC3C9");
+        b1.setPrefSize(20, 10);
+        Label b2 = new Label();
+        b2.setStyle("-fx-background-color: #E0DCD3");
+        b2.setPrefSize(20, 10);
+        Label b3 = new Label();
+        b3.setStyle("-fx-background-color: #CCBE9F");
+        b3.setPrefSize(20, 10);
+        Label b4 = new Label();
+        b4.setStyle("-fx-background-color: #382119");
+        b4.setPrefSize(20, 10);
+        paneLvl3b.getChildren().addAll(b1, b2, b3, b4, rBtn2);
+        paneLvl2c.add(paneLvl3b, 0, 2);
+
+        TilePane paneLvl3c = new TilePane();
+        paneLvl3c.setAlignment(Pos.CENTER);
+        paneLvl3c.setHgap(5);
+        RadioButton rBtn3 = new RadioButton();
+        Label c1 = new Label();
+        c1.setStyle("-fx-background-color: #601A4A");
+        c1.setPrefSize(20, 10);
+        Label c2 = new Label();
+        c2.setStyle("-fx-background-color: #EE442F");
+        c2.setPrefSize(20, 10);
+        Label c3 = new Label();
+        c3.setStyle("-fx-background-color: #63ACBE");
+        c3.setPrefSize(20, 10);
+        Label c4 = new Label();
+        c4.setStyle("-fx-background-color: #F9F4EC");
+        c4.setPrefSize(20, 10);
+        paneLvl3c.getChildren().addAll(c1, c2, c3, c4, rBtn3);
+        paneLvl2c.add(paneLvl3c, 0, 3);
+
+        TilePane paneLvl3d = new TilePane();
+        paneLvl3d.setAlignment(Pos.CENTER);
+        paneLvl3d.setHgap(5);
+        RadioButton rBtn4 = new RadioButton();
+        Label d1 = new Label();
+        d1.setStyle("-fx-background-color: #F5793A");
+        d1.setPrefSize(20, 10);
+        Label d2 = new Label();
+        d2.setStyle("-fx-background-color: #A95AA1");
+        d2.setPrefSize(20, 10);
+        Label d3 = new Label();
+        d3.setStyle("-fx-background-color: #85C0F9");
+        d3.setPrefSize(20, 10);
+        Label d4 = new Label();
+        d4.setStyle("-fx-background-color: #0F2080");
+        d4.setPrefSize(20, 10);
+        paneLvl3d.getChildren().addAll(d1, d2, d3, d4, rBtn4);
+        paneLvl2c.add(paneLvl3d, 0, 4);
+
+        ToggleGroup themeGroup = new ToggleGroup();
+        rBtn1.setToggleGroup(themeGroup);
+        rBtn2.setToggleGroup(themeGroup);
+        rBtn3.setToggleGroup(themeGroup);
+        rBtn4.setToggleGroup(themeGroup);
+
+        mainMenuScene=primaryScene;
+    }
+    
     public Stage getTheStage(){
         return theStage;
     }
